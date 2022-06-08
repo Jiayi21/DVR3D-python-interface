@@ -1,0 +1,38 @@
+{
+  "LINE1": {
+    "type": "PRT",
+    "head": "%PRT",
+    "keylist_A": [
+      "TOLER"
+    ],
+    "keylist_L": [
+      "ZPFUN",
+      "ZTRAN",
+      "ZDCORE",
+      "ZDIAG"
+    ]
+  },
+  "LINE2": {
+    "type": "VAL",
+    "format": "I5",
+    "minval": 1,
+    "keylist": [
+      "NVIB",
+      "NEVAL",
+      "KMIN",
+      "IBASS",
+      "NEVAL2"
+    ]
+  },
+  "LINE3": {
+    "type": "TITLE",
+    "length": 72
+  },
+  "LINE4": {
+    "type": "CUS",
+    "minval": 1,
+    "keylist": {
+      "EZERO": "F13.8"
+    }
+  }
+}

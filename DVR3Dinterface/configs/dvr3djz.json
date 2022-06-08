@@ -1,0 +1,134 @@
+{
+  "LINE1": {
+    "type": "PRT",
+    "keylist_A": [
+      "ILEV",
+      "IEIGS1",
+      "IVECS1",
+      "IEIGS2",
+      "IVECS2",
+      "IVINT",
+      "IBAND",
+      "INTVEC",
+      "IOUT1",
+      "IOUT2",
+      "IWAVE"
+    ],
+    "keylist_L": [
+      "ZPHAM",
+      "ZPRAD",
+      "ZP1D",
+      "ZP2D",
+      "ZPMIN",
+      "ZPVEC",
+      "ZLMAT",
+      "ZCUT",
+      "ZROT",
+      "ZPERP",
+      "ZEMBED",
+      "ZLIN",
+      "ZMORS1",
+      "ZMORS2",
+      "ZLADD",
+      "ZTWOD",
+      "ZVEC",
+      "ZALL",
+      "ZTHETA",
+      "ZR2R1",
+      "ZTRAN",
+      "ZQUAD2",
+      "ZDIAG",
+      "ZPFUN",
+      "ZPSEG"
+    ]
+  },
+  "LINE2": {
+    "type": "VAL",
+    "format": "I5",
+    "minval": 1,
+    "keylist": [
+      "NCOORD"
+    ]
+  },
+  "LINE3": {
+    "type": "VAL",
+    "format": "I5",
+    "minval": 1,
+    "keylist": [
+      "NPNT2",
+      "JROT",
+      "NEVAL",
+      "NALF",
+      "MAX2D",
+      "MAX3D",
+      "IDIA",
+      "KMIN",
+      "NPNT1",
+      "IPAR",
+      "MAX3D2"
+    ]
+  },
+  "LINE4": {
+    "type": "TITLE",
+    "length": 72
+  },
+  "LINE5": {
+    "type": "CUS",
+    "minval": 0,
+    "keylist": {
+      "FIXCOS": "F20.0"
+    }
+  },
+  "LINE6": {
+    "type": "CUS",
+    "minval": 3,
+    "keylist": {
+      "XMASS(1)": "F15.9",
+      "XMASS(2)": "F14.1",
+      "XMASS(3)": "F28.9"
+    }
+  },
+  "LINE7": {
+    "type": "CUS",
+    "minval": 3,
+    "keylist": {
+      "XMASSR(1)": "F15.9",
+      "XMASSR(2)": "F14.1",
+      "XMASSR(3)": "F28.9"
+    }
+  },
+  "LINE8": {
+    "type": "VAL",
+    "minval": 0,
+    "format": "F14.1",
+    "keylist": [
+      "EMAX1",
+      "EMAX2"
+    ]
+  },
+  "LINE9": {
+    "type": "CUS",
+    "minval": 3,
+    "keylist": {
+      "RE1": "F12.1",
+      "DISS1": "F23.1",
+      "WE1": "F19.4"
+    }
+  },
+  "LINE10": {
+    "type": "CUS",
+    "minval": 3,
+    "keylist": {
+      "RE2": "F12.1",
+      "DISS1": "F23.1",
+      "WE2": "F20.3"
+    }
+  },
+  "LINE11": {
+    "type": "CUS",
+    "minval": 0,
+    "keylist": {
+      "EZERO": "F20.0"
+    }
+  }
+}
