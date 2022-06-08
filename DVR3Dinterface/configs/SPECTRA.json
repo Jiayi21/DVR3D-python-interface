@@ -1,0 +1,80 @@
+{
+  "LINE1": {
+    "type": "PRT",
+    "head": "&PRT",
+    "keyword_A": [
+      "ITRA",
+      "ILEV",
+      "ISPE",
+      "ITEM",
+      "WSMIN",
+      "WSMAX",
+      "EMIN",
+      "EMAX",
+      "JMAX",
+      "SMIN",
+      "GZ"
+    ],
+    "keyword_L": [
+      "ZOUT",
+      "ZSORT",
+      "ZSPE",
+      "ZPFUN",
+      "ZPSEG"
+    ]
+  },
+  "LINE2": {
+    "type": "TITLE",
+    "length": 72
+  },
+  "LINE3": {
+    "type": "VAL",
+    "format": "D10.0",
+    "minval": 0,
+    "keylist": [
+      "GE",
+      "GO"
+    ]
+  },
+  "LINE4": {
+    "type": "VAL",
+    "format": "F10.0",
+    "minval": 2,
+    "keylist": [
+      "TEMP",
+      "XMIN",
+      "WMIN",
+      "WMAX",
+      "DWL",
+      "Q"
+    ]
+  },
+  "LINE5": {
+    "type": "PRT",
+    "head": "&SPE",
+    "keyword_A": [
+      "EMIN1",
+      "EMAX1",
+      "EMIN2",
+      "EMAX2",
+      "JMAX",
+      "IPLOT",
+      "NPOINTS",
+      "XMOLM",
+      "IDAT",
+      "ILIST",
+      "PRTPR",
+      "TINTE"
+    ],
+    "keyword_L": [
+      "ZEMIT",
+      "ZPLOT",
+      "ZPROF",
+      "ZDOP",
+      "ZENE",
+      "ZLIST",
+      "ZFREQ",
+      "ZEINST"
+    ]
+  }
+}

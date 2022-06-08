@@ -30,3 +30,22 @@ RE1,DISS1,WE1
 RE2,DISS2,WE2
 * 3F20.0
 * "F12.1","F23.1","F20.3"
+
+# ROTLEV3
+## Differ
+EZERO
+* F20.0
+* F13.8
+
+# DIPOLE3
+## Unknown
+EZEROUP: F20.0
+
+TE: F20.0
+
+## Differ:
+EZERO
+* F20.0
+* F13.8
+
+## SPECTRA

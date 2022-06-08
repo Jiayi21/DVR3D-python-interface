@@ -1,0 +1,39 @@
+{
+    "LINE1": {
+        "type": "PRT",
+        "head": "&PRT",
+        "keylist_A": [
+            "IKET",
+            "IBRA",
+            "ITRA"
+        ],
+        "keylist_L": [
+            "ZPRINT",
+            "ZTRA",
+            "ZSTART",
+            "ZUVVIS",
+            "ZPSEG"
+        ]
+    },
+    "LINE2": {
+        "type": "TITLE",
+        "length": 72
+    },
+    "LINE3": {
+        "type": "VAL",
+        "format": "I5",
+        "minval": 1,
+        "keylist": [
+            "NPOT","NV1","NV2","IBASE1","IBASE2"
+        ]
+    },
+    "LINE4": {
+        "type": "CUS",
+        "minval": 0,
+        "keylist": {
+            "EZERO": "F13.8",
+            "EZEROUP":"F20.0",
+            "TE":"F20.0"
+        }
+    }
+}
