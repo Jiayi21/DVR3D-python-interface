@@ -2,7 +2,7 @@
   "LINE1": {
     "type": "PRT",
     "head": "&PRT",
-    "keyword_A": [
+    "keylist_A": [
       "ITRA",
       "ILEV",
       "ISPE",
@@ -15,7 +15,7 @@
       "SMIN",
       "GZ"
     ],
-    "keyword_L": [
+    "keylist_L": [
       "ZOUT",
       "ZSORT",
       "ZSPE",
@@ -29,7 +29,7 @@
   },
   "LINE3": {
     "type": "VAL",
-    "format": "D10.0",
+    "format": "F10.0",
     "minval": 0,
     "keylist": [
       "GE",
@@ -52,7 +52,7 @@
   "LINE5": {
     "type": "PRT",
     "head": "&SPE",
-    "keyword_A": [
+    "keylist_A": [
       "EMIN1",
       "EMAX1",
       "EMIN2",
@@ -66,7 +66,7 @@
       "PRTPR",
       "TINTE"
     ],
-    "keyword_L": [
+    "keylist_L": [
       "ZEMIT",
       "ZPLOT",
       "ZPROF",

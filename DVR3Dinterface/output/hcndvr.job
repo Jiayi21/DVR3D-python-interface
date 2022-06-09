@@ -1,0 +1,11 @@
+ &PRT zp1d=.false., zp2d=.false., zrot=.true., zembed=.false., zlin=.true., ztheta=.false., zr2r1=.false., ztran=.true., zpfun=.true.,  / 
+    1
+   30    0   40   45 1000 1500    1    2   16
+HCN: J=2 calculation
+
+    1.007825035          12.0                14.003074002
+    1.007825035          12.0                14.003074002
+       45000.0
+         2.3                   29.0             0.0105
+         3.2                   29.0               0.004
+

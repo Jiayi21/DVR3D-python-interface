@@ -1,6 +1,7 @@
 from fortranformat import FortranRecordWriter as ffW
 from pathlib import Path
 import json
+import os
 
 class GeneralParser:
     config = {}
@@ -98,7 +99,7 @@ def txtToJson(filepath):
             while(line != ""):
                 try:   
                     lineVec = line.split(":")
-                    fout.write("\"{}\":{}".format(lineVec[0],lineVec[1]))
+                    fout.write("\"{}\":{}".format(lineVec[0],':'.join(lineVec[1:])))
                     line = fin.readline()
                     if (line != ""): fout.write(",")
                 except Exception as e:
