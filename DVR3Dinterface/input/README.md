@@ -11,7 +11,7 @@ Each line in the file consists of \[Variable name\] : \[Value\]
 Namelist here means the first line started with "&PRT" or other lines in same format.
 * For Boolean type value, use "true" or "false" without quotation marks
 * For other types, put value in quotation marks, parser will condsider it as string and put it into job file without parsing. 
-  * It has been found using 1d-4 and 0.0001 is same for Fortran code, thus the non-boolean value in namelist can have different format. Thus, to prevent parsing cause change of the value and affect result, no parsing is done to this type of value.
+  * It has been found using 1d-4 and 0.0001 is same for Fortran code, means the non-boolean value in namelist can have different format. Thus, to prevent parsing cause change of the value and affect result, no parsing is done to this type of value.
 
 ## Other
 Value can be given in format that acceptable by json loader. Include scientific notation.

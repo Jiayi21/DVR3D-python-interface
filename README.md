@@ -3,9 +3,9 @@ This interface is designed to be run on Linux for the DVR3D Fortran library.
 
 * [Environment](#environment)
 * [Compile](#compile)
-* [Run](/DVR3Dinterface/README.md)
-* [Input Format](/DVR3Dinterface/input/README.md)
-* [Config Files](/DVR3Dinterface/configs/README.md)
+* [Run](/DVR3Dinterface/)
+* [Input Format](/DVR3Dinterface/input/)
+* [Config Files](/DVR3Dinterface/configs/)
 
 
 # Environment
