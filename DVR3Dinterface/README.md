@@ -22,3 +22,13 @@ Example:
 ~~~~
 python .\parse.py input/example_rot.txt example_config -o example.job
 ~~~~
+
+## Compiled binary
+Mostly same, but replace
+~~~~
+python .\parse.py ....
+~~~~
+by:
+~~~~
+./parse ....
+~~~~

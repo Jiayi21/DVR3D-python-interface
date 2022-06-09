@@ -20,3 +20,8 @@ While running from console, note that python does compiling and run together by
 
 "python script.py [some arguments]"
 
+## Compiled binary
+It is a file named "parse" in same folder as parse.py provided as a test.
+It is expected to be able to run without python compiler and any python packages. But for some reason the file is larger than expected (12Mb)
+Detaile use instruction can be found in [it's folder](/DVR3Dinterface/)'s README file
+
