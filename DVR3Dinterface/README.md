@@ -4,7 +4,7 @@ Command "python script.py -h" can show help message for the script.
 # parser.py
 This script is a separated commandline interface for the parser submodule "dvr3dparser.py".
 
-The parser will read varialbe names and values from a [input file](/DVR3Dinterface/input/) file given by user. And generat a job file by specified [config](/DVR3Dinterface/configs/).
+The parser will read variable names and values from a [input file](/DVR3Dinterface/input/) file given by user. And generate a job file by specified [config](/DVR3Dinterface/configs/).
 ~~~~
 usage: parse.py [-h] [-o OUTPUT] [-j] input config
 
