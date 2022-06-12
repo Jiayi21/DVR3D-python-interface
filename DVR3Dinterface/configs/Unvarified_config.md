@@ -38,7 +38,6 @@ EZERO
 * F13.8
 
 # DIPOLE3
-NOT TESTED
 ## Unknown
 EZEROUP: F20.0
 
@@ -50,8 +49,8 @@ EZERO
 * F13.8
 
 # SPECTRA
-NOT TESTED
 ## Unknown
+not summaried
 
 ## DIffer
 GE,GO
@@ -59,4 +58,5 @@ GE,GO
 * 2F10.0: Can parse, but not tested, this line in example is F8.1
 
 LINE 4:
-* Greatly different
+* From: F10.0
+* To: F7.1, D12.1, F10.1, F10.1, F7.1 F14.1

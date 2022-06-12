@@ -1,6 +1,7 @@
 ZSORT:true
 ZOUT:false
 ZPFUN:false
+ZPSEG:true
 GZ:"3481.50"
 SMIN:"1.0d-40"
 EMIN:"0.0d0"
@@ -22,3 +23,4 @@ ZEMIT:false
 EMAX1:"60000.0d6"
 EMAX2:"60000.0d6"
 ZPROF:true
+ZPLOT:true
