@@ -50,12 +50,15 @@ EZERO
 
 # SPECTRA
 ## Unknown
-not summaried
+Value field should be tested
+
+NAMELIST not all tested, but should work
 
 ## DIffer
 GE,GO
 * 2D10.0: fortranformat has problem parseing "1.0" to this format
 * 2F10.0: Can parse, but not tested, this line in example is F8.1
+* F8.1: 10 positon will cause error
 
 LINE 4:
 * From: F10.0
