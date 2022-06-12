@@ -23,7 +23,7 @@ class GeneralParser:
         # Check keylist_A, all optional
         for var in configsub["keylist_A"]:
             if var in data:
-                filestream.write(var.lower()+"={} ".format(data[var]))
+                filestream.write(var.lower()+"={}, ".format(data[var]))
         
         # Check keylist_L, all optional
         for var in configsub["keylist_L"]:
