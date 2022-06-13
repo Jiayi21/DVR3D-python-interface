@@ -32,3 +32,15 @@ by:
 ~~~~
 ./parse ....
 ~~~~
+
+# parseArun.py
+parse-and-run
+
+Interface for testing running Fortran (actually running linux commandline) from python script.
+
+usage can be found by running with -h argument.
+
+example:
+~~~~
+python parseArun.py input/hcn.dvr DVR3DJZ parserResult.dvr -j
+~~~~
