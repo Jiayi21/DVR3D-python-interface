@@ -2,7 +2,7 @@ import argparse
 import json
 from pathlib import Path
 from xmlrpc.client import Boolean
-from source.dvr3dparser import txtToJson,GeneralParser
+from source_p.dvr3dparser import txtToJson,GeneralParser
 import os
 
 if __name__ == '__main__':

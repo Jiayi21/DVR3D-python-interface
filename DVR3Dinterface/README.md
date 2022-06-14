@@ -4,6 +4,8 @@ Command "python script.py -h" can show help message for the script.
 # parser.py
 This script is a separated commandline interface for the parser submodule "dvr3dparser.py".
 
+*Work on Win and Linux, tested on python 3.8*
+
 The parser will read variable names and values from a [input file](/DVR3Dinterface/input/) file given by user. And generate a job file by specified [config](/DVR3Dinterface/configs/).
 ~~~~
 usage: parse.py [-h] [-o OUTPUT] [-j] input config
@@ -38,9 +40,11 @@ parse-and-run
 
 Interface for testing running Fortran (actually running linux commandline) from python script.
 
+*Work on Linux, tested on python 3.8*
+
 usage can be found by running with -h argument.
 
 example:
 ~~~~
-python parseArun.py input/hcn.dvr DVR3DJZ parserResult.dvr -j
+python parseArun.py input/hcn.dvr DVR3DJZ dvr.out
 ~~~~
