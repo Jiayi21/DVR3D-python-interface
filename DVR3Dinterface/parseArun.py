@@ -30,7 +30,7 @@ if __name__ == '__main__':
     if not args.job:
         os.remove("output/temp.job")
 
-    outfilename = args.config+".job"
+    outfilename = args.config+".result"
     if (args.output):
         outfilename = args.output
 
