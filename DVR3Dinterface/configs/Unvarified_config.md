@@ -1,7 +1,11 @@
 This file includes the variables that input format hasn't been verified.
 
+**\[Detailed tested\]:** Because in the early stage I mixed up some error type. Some parameters in **Differ** section might not cause Fortran error, the error could from other reason that has been solved (missing file, or error was from other argument's format). Currently I'm testing them again while tring to find some information from Fortran code (I just realized this way after last meeting). Those tested ones will be marked as detailed tested.
+
+These detailed tested flags will be removed after all of them are tested. With the instruction above.
+
 * Been verified: Fortran code can run for that variable have same format as the document
-* Differ: Format on document didn't work (by error, wrong result, or that F20.0 looks greatly different from example), but an acceptable format was found (most likely manually counted from example)
+* Differ: Format on document have some uncertain (by error, wrong result, or that F20.0 looks greatly different from example), but an acceptable format was found (most likely manually counted from example)
 * Unknown: Not verified, and does not in an example. Parsing of this variable was not tested.
 
 # DVR3DJZ
@@ -44,9 +48,10 @@ EZEROUP: F20.0
 TE: F20.0
 
 ## Differ
-EZERO
-* F20.0
-* F13.8
+EZERO \[Detailed Tested\]
+* F20.0 in document, and in Fortran code
+* F13.8 in example
+* Both format can work, producing different result
 
 # SPECTRA
 ## Unknown
