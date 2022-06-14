@@ -71,6 +71,7 @@ EZERO \[Detailed Tested\]
 ## DIffer
 GE,GO
 * 2D10.0: fortranformat has problem parseing "1.0" to this format
+  * should be 1d0? or 0.1d1? The 0.1 it will not be allowd for D10.**0**
 * 2F10.0: Can parse, but not tested, this line in example is F8.1
 * F8.1: 10 positon will cause error
 
