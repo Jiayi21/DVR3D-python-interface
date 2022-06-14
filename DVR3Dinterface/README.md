@@ -35,6 +35,10 @@ by:
 ./parse ....
 ~~~~
 
+This also applied to other compiled binary
+
+*Note: the binary executables might not up to date*
+
 # parseArun.py
 parse-and-run
 
