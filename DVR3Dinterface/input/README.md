@@ -17,3 +17,8 @@ Namelist here means the first line started with "&PRT" or other lines in same fo
 Value can be given in format that acceptable by json loader. Include scientific notation.
 
 However, note that Float in python is double precision by default, and value like 1.0d-40 should be written as 1.0e-40. "d" mark cannot be used.
+
+## Comment
+Comment can be used within input files, a line started by "!" will be comment and will not be read as data.
+
+It will be useful to add some comment as separat lines in files to mark which "line" it is, or it will be hard to find variables.

@@ -98,6 +98,11 @@ def txtToJson(filepath):
             line = fin.readline()
             while(line != ""):
                 try:   
+                    # This will allow comment line
+                    if line[0]=='!': 
+                        line = fin.readline()
+                        continue
+
                     lineVec = line.split(":")
                     fout.write("\"{}\":{}".format(lineVec[0],':'.join(lineVec[1:])))
                     line = fin.readline()

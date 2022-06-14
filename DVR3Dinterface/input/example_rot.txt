@@ -5,6 +5,7 @@ ZDCORE:false
 NVIB:40
 NEVAL:30
 KMIN:2
+! Testing comment line
 IBASS:120
 NEVAL2:20
 TITLE:"HCN rovib J=2 e and f"
