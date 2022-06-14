@@ -9,10 +9,15 @@ Argument Status:
 
 # DVR3DJZ
 ## Unknown
-FIXCOS: F20.0 : **Cause Error**
+FIXCOS: F20.0 : **Cause Error (maybe)**
 * In fortran code line 1042 and 233 it is I5?
+* Maybe I can check this by myself, if I can match which executable was compiled from which source Fortran code
+* But when I run it again, finding I fogot to change F20.0 to I5, it worked???
+* Both I5 and F20.0 can run, not affecting result
 
-EZERO: F20.0 : **Cause Error**
+EZERO: F20.0 : **Cause Error (maybe)**
+* Same as above, tested again with randomly put something into EZERO: 3456, it worked. I have no idea which test I did what wrong.
+* Maybe will test again after several days with a cleaner memory
 
 ## Differ
 XMASS (Detailed Tested)
@@ -36,9 +41,8 @@ EMAX1,EMAX2 (Detailed Tested)
 * Both work, same result
 
 RE1,DISS1,WE1 (Detailed Tested)
-* 3F20.0
+* 3F20.0: **Cause Error**
 * "F12.1","F23.1","F19.4"
-* **Cause Error**
 
 RE2,DISS2,WE2
 * 3F20.0
