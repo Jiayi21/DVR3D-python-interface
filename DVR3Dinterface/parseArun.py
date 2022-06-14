@@ -1,7 +1,6 @@
 import argparse
 import json
 from pathlib import Path
-from xmlrpc.client import Boolean
 from source_p.dvr3dparser import txtToJson,GeneralParser
 import os
 
@@ -34,7 +33,7 @@ if __name__ == '__main__':
 
     os.system("make "+args.Fsource)
     os.system("./{} <output/temp.job> {}".format(args.Fsource, outfilename))
-    
+
     if not args.job:
         os.remove("output/temp.job")
 

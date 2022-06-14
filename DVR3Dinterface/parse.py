@@ -1,7 +1,6 @@
 import argparse
 import json
 from pathlib import Path
-from xmlrpc.client import Boolean
 from source_p.dvr3dparser import txtToJson,GeneralParser
 import os
 
