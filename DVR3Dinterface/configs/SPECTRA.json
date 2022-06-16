@@ -29,7 +29,7 @@
   },
   "LINE3": {
     "type": "VAL",
-    "format": "F8.1",
+    "format": "F10.5",
     "minval": 0,
     "keylist": [
       "GE",
@@ -37,16 +37,17 @@
     ]
   },
   "LINE4": {
-    "type": "CUS",
+    "type": "VAL",
+    "format":"d10.2",
     "minval": 2,
-    "keylist": {
-      "TEMP":"F7.1",
-      "XMIN":"D12.1",
-      "WMIN":"F10.1",
-      "WMAX":"F10.1",
-      "DWL":"F7.1",
-      "Q":"F14.1"
-    }
+    "keylist": [
+      "TEMP",
+      "XMIN",
+      "WMIN",
+      "WMAX",
+      "DWL",
+      "Q"
+    ]
   },
   "LINE5": {
     "type": "PRT",

@@ -77,59 +77,63 @@
     "type": "CUS",
     "minval": 0,
     "keylist": {
-      "FIXCOS": "F20.0"
+      "FIXCOS": "F20.10"
     }
   },
   "LINE6": {
-    "type": "CUS",
+    "type": "VAL",
+    "format":"F20.10",
     "minval": 3,
-    "keylist": {
-      "XMASS(1)": "F15.9",
-      "XMASS(2)": "F14.1",
-      "XMASS(3)": "F28.9"
-    }
+    "keylist": [
+      "XMASS(1)",
+      "XMASS(2)",
+      "XMASS(3)"
+  ]
   },
   "LINE7": {
-    "type": "CUS",
+    "type": "VAL",
+    "format":"F20.10",
     "minval": 3,
-    "keylist": {
-      "XMASSR(1)": "F15.9",
-      "XMASSR(2)": "F14.1",
-      "XMASSR(3)": "F28.9"
-    }
+    "keylist": [
+      "XMASSR(1)",
+      "XMASSR(2)",
+      "XMASSR(3)"
+    ]
   },
   "LINE8": {
     "type": "VAL",
     "minval": 0,
-    "format": "F14.1",
+    "format": "F20.10",
     "keylist": [
       "EMAX1",
       "EMAX2"
     ]
   },
   "LINE9": {
-    "type": "CUS",
+    "type": "VAL",
+    "format":"F20.10",
     "minval": 3,
-    "keylist": {
-      "RE1": "F12.1",
-      "DISS1": "F23.1",
-      "WE1": "F19.4"
-    }
+    "keylist": [
+      "RE1",
+      "DISS1",
+      "WE1"
+    ]
   },
   "LINE10": {
-    "type": "CUS",
+    "type": "VAL",
+    "format":"F20.10",
     "minval": 3,
-    "keylist": {
-      "RE2": "F12.1",
-      "DISS2": "F23.1",
-      "WE2": "F20.3"
-    }
+    "keylist": [
+      "RE2",
+      "DISS2",
+      "WE2"
+    ]
   },
   "LINE11": {
     "type": "CUS",
     "minval": 0,
     "keylist": {
-      "EZERO": "F20.0"
+      "EZERO": "F20.10"
     }
   }
 }

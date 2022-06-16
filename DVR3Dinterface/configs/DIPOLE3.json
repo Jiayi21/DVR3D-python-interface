@@ -28,12 +28,13 @@
         ]
     },
     "LINE4": {
-        "type": "CUS",
+        "type": "VAL",
+        "format":"F20.10",
         "minval": 0,
-        "keylist": {
-            "EZERO": "F13.8",
-            "EZEROUP":"F20.0",
-            "TE":"F20.0"
-        }
+        "keylist": [
+            "EZERO",
+            "EZEROUP",
+            "TE"
+        ]
     }
 }
