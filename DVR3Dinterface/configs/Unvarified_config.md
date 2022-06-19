@@ -10,21 +10,17 @@ FIXCOS,EZERO,XMASS,XMASSR,EMAX1,EMAX2,RE1,RE2,DISS1,DISS2,WE1,WE2
 
 Changed from F20.0 to F20.10
 
-*Tested by old data*
 ## Unknown
 FIXCOS
 
 EZERO
 
-
 # ROTLEV3
 EZERO F20.0 => F20.10
 
-***NOT TESTED, licence problem***
 # DIPOLE3
 EZEROUP,TE,EZERO => F20.10
 
-***NOT TESTED, licence problem***
 ## Unknown
 EZEROUP: F20.0
 
@@ -37,7 +33,10 @@ LINE 4: F10.0=>F10:5 having problem
 
 There is data have more than 5 digits before dot, output will be 10 of *
 
-***NOT TESTED, licence problem***
+Use double precision scientific type: D10.2
+* ***Tested With Difference*** :Some digits in original input has been capped
+
+
 
 ## DIffer
 LINE 4:
