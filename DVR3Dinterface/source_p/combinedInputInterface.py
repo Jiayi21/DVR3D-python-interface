@@ -82,5 +82,10 @@ class CombinedInputInterface:
                 raise RuntimeError("Error code {} on running: {}".format(code,cmd))
         
         if clearTemp:
-            os.remove("input/temp/*")
+            dir = Path("input/temp")
+            for f in os.listdir(dir):
+                try:
+                    os.remove(dir.joinpath(f))
+                except Exception:
+                    print("Failed to remove: {}".format(f))
     

@@ -17,7 +17,9 @@ if __name__ == '__main__':
 
     # Optional print instructions that will be run in commandline
     if args.cmds:
+        print("========Instructions to run==========")
         combinedII.printCommands()
+        print("=====================================")
     
     # Run commandline (Fortran, cp...)
     # Optional clearing temp folder
