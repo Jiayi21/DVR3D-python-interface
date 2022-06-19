@@ -22,19 +22,47 @@ EZERO F20.0 => F20.10
 EZEROUP,TE,EZERO => F20.10
 
 ## Unknown
-EZEROUP: F20.0
+EZEROUP
 
-TE: F20.0
+TE
 
 # SPECTRA
-GE,GO: F10.0 => F10.5
+GE,GO: F10.0 => F10.5 : Tested, result same
+
 
 LINE 4: F10.0=>F10:5 having problem
 
 There is data have more than 5 digits before dot, output will be 10 of *
 
 Use double precision scientific type: D10.2
-* ***Tested With Difference*** :Some digits in original input has been capped
+* *Tested With Difference* :Some digits in original input has been capped
+
+Use Custom Format: D10.2 for second argument, F10.3 for others
+* ***Tested with Unknown Difference***: There is some difference from the original output, but can't tell if it's wrong.
+~~~~
++ +--  8 lines: Program SPECTRA (version of Feb 2004)---------------|+ +--  8 lines: Program SPECTRA (version of Feb 2004)--------------
+       Maximum frequency,   WSMAX = 0.90000D+04 cm-1                |       Maximum frequency,   WSMAX = 0.90000D+04 cm-1
+       Minimum energy,       EMIN = 0.00000D+00 cm-1                |       Minimum energy,       EMIN = 0.00000D+00 cm-1
+       Maximum energy,       EMAX = 0.18000D+05 cm-1                |       Maximum energy,       EMAX = 0.18000D+05 cm-1
+       Minimum linestrength, SMIN = 0.10000D-39 D**2                |       Minimum linestrength, SMIN = 0.10000D-39 D**2
+       Maximum rotations     JMAX =  500                            |       Maximum rotations     JMAX =  500
+                                                                    |
+        3000 transition records read from unit ITRA = 13            |         600 transition records read from unit ITRA = 13
+        3000 selected and      written to unit ITEM = 16            |         600 selected and      written to unit ITEM = 16
+                                                                    |
+       Memory required to sort transitions     0.183 MB             |       Memory required to sort transitions     0.037 MB
+                                                                    |
+                                                                    |
+            Sort completed successfully                             |            Sort completed successfully
+                                                                    |
+                                                                    |
+                                                                    |
++ +--  9 lines: 0 secs CPU time used--------------------------------|+ +--  9 lines: 0 secs CPU time used-------------------------------
+       Frequency range from      0.000 cm-1 to  18000.000 cm-1      |       Frequency range from      0.000 cm-1 to  18000.000 cm-1
+       profile half width     1.000                                 |       profile half width     1.000
+                                                                    |
+                                                                    |
+~~~~
 
 
 
