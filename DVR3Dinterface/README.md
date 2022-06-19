@@ -52,3 +52,19 @@ example:
 ~~~~
 python parseArun.py input/hcn.dvr DVR3DJZ dvr.out
 ~~~~
+
+# parseBatchRun.py
+Take a file that having multiple things to run as input.
+
+Parse the argument to Fortran job and run Fortran code.
+
+*Work on Linux, tested on python 3.8*
+
+*On windows, try around the source code: source_p/combinedInputInterface.py, Class CombinedInputInterface. The "run()" is only for Fortran env. Rest of code can work*
+
+Usage can be found by running with -h argument.
+
+example:
+~~~~
+python parseBatchRun.py input/combined.txt -c
+~~~~

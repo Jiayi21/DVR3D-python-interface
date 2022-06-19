@@ -1,7 +1,35 @@
 # Input Files
+## Single File
 Input file is a text file encoded in UTF-8. Have similar format as a JSON file, with varialbe name as key and value as value. However, typing quotation marks can be inconvenient so the quotation marks on keys (variable name) will be added by parser.
 
 Example input file is [example_rot](example_rot.txt)
+
+## Batch (combined) input
+While running multiple steps in one file, use the batch input format.
+
+In this type of input files, for [example](combined.txt), the file is devided in to multiple **Sections**, each secion start with "&&"
+
+### Fortan DVR3D section:
+~~~~
+&&Fortran DVR3DJZ ./dvr.out outname=output1_manual.result
+....
+(Variables and values, same as single file contents)
+~~~~
+
+&& must followed by "Fortran" without spaces. It can take several arguments:
+ * Config: (DVR3DJZ) config of .job file, use json filenames from configs folder without ".json"
+ * Fortran Executable: (./dvr.out) Path to fortran code to run
+ * \[Optional\]: Output filename, followed by "outputname=" If not given, it will be outputX.result, where X is the Xth Fortran block
+
+### Commandline Instruction Section
+If there is no "Fortran" after "&&", it is a command section.
+
+Things after "&&" of that line will be considered as a command to be run 
+
+~~~~
+&&cp fort.8 fort.11
+&&cp fort.9 fort.12
+~~~~
 
 # Input Format
 Each line in the file consists of \[Variable name\] : \[Value\]
