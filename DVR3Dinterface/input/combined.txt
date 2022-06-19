@@ -65,7 +65,7 @@ NV1:30
 NV2:20
 EZERO:3481.50552084
 
-&&Fortran SPECTRA ./spe.out
+&&Fortran SPECTRA ./spc.out
 ZSORT:true
 ZOUT:false
 ZPFUN:false

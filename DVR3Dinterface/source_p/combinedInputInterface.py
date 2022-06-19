@@ -7,7 +7,11 @@ class CombinedInputInterface:
     # Record the commandline to run
     commands = []
 
-    def __init__(self,inputpath):
+    def __init__(self,inputpath,clearcmds=True):
+        # While doing test, the class was inited many times, but commands are duplicated for some reason
+        if clearcmds:
+            self.commands=[]
+
         # Open the file read every line into a vector
         lines = open(Path(inputpath)).read().splitlines()
 
