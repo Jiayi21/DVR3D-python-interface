@@ -1,7 +1,7 @@
 This page introduce how to run the interface code from commandline.
 
 Command "python script.py -h" can show help message for the script.
-# parser.py
+# parse.py
 This script is a separated commandline interface for the parser submodule "dvr3dparser.py".
 
 *Work on Win and Linux, tested on python 3.8*

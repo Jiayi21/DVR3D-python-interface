@@ -24,7 +24,7 @@ In this type of input files, for [example](combined.txt), the file is devided in
 ### Commandline Instruction Section
 If there is no "Fortran" after "&&", it is a command section.
 
-Things after "&&" of that line will be considered as a command to be run 
+Things after "&&" of that line will be considered as a command to run 
 
 ~~~~
 &&cp fort.8 fort.11
