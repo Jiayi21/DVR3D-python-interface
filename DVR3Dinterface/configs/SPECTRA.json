@@ -37,17 +37,16 @@
     ]
   },
   "LINE4": {
-    "type": "VAL",
-    "format":"d10.2",
+    "type": "CUS",
     "minval": 2,
-    "keylist": [
-      "TEMP",
-      "XMIN",
-      "WMIN",
-      "WMAX",
-      "DWL",
-      "Q"
-    ]
+    "keylist": {
+      "TEMP":"F10.3",
+      "XMIN":"D10.2",
+      "WMIN":"F10.3",
+      "WMAX":"F10.3",
+      "DWL":"F10.3",
+      "Q":"F10.3"
+    }
   },
   "LINE5": {
     "type": "PRT",
