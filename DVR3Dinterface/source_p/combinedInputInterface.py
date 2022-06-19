@@ -75,9 +75,12 @@ class CombinedInputInterface:
         for cmd in self.commands:
             print(cmd)
 
-    def run(self):
+    def run(self, clearTemp = True):
         for cmd in self.commands:
             code = os.system(cmd)
             if code != 0:
                 raise RuntimeError("Error code {} on running: {}".format(code,cmd))
+        
+        if clearTemp:
+            os.remove("input/temp/*")
     
