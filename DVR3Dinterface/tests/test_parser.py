@@ -28,3 +28,18 @@ def test_WrongChar():
         jsonfile = json.load(fin)
     with raises(TypeError) as exception:
         dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/CharForFloat.job"))
+
+tpath = "DVR3Dinterface/tests/testdata/"
+cpath="DVR3Dinterface/configs/DVR3DJZ.json"
+
+def test_neg_WrongBool():
+    dvrparser = parser.GeneralParser(cpath)
+    with open (Path(tpath+"n_wrongBool.json")) as fin:
+        with raises(json.JSONDecodeError) as exception:
+            jsonfile = json.load(fin)
+
+def test_neg_WrongNum():
+    dvrparser = parser.GeneralParser(cpath)
+    with open (Path(tpath+"n_wrongNum.json")) as fin:
+        with raises(json.JSONDecodeError) as exception:
+            jsonfile = json.load(fin)
