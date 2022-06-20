@@ -96,17 +96,20 @@ def txtToJson(filepath):
         with open(pathout,"w+",encoding="utf-8",newline="") as fout:
             fout.write("{\n")
             line = fin.readline()
+            firstline = True # Don't print the first comma
             while(line):
                 try:   
+                    if (line and not (line[0]=='!' or line == "\n") and not firstline): fout.write(",")
                     # This will allow comment line
                     if line[0]=='!' or line == "\n": 
                         line = fin.readline()
                         continue
 
+                    firstline = False
                     lineVec = line.split(":")
                     fout.write("\"{}\":{}".format(lineVec[0],':'.join(lineVec[1:])))
                     line = fin.readline()
-                    if (line and not (line[0]=='!' or line == "\n")): fout.write(",")
+                    
                 except Exception as e:
                     print("Failed reading input, check file format: {}".format(line))
                     raise
