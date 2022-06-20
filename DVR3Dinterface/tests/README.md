@@ -7,4 +7,4 @@ Tests can be run by:
 python -m pytest
 ~~~~
 
-from root folder or DVR3Dinterface folder
+from root folder
