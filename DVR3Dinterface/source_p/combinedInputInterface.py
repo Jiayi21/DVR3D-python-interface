@@ -1,6 +1,13 @@
+from doctest import testmod
 import json
 from pathlib import Path
-from source_p import dvr3dparser as dp
+testmode = False
+try:
+    from source_p import dvr3dparser as dp
+except:
+    # For testing
+    from DVR3Dinterface.source_p import dvr3dparser as dp
+    testmode = True
 import os
 
 class CombinedInputInterface:
@@ -8,6 +15,10 @@ class CombinedInputInterface:
     commands = []
 
     def __init__(self,inputpath,clearcmds=True):
+        tempdir ="input/temp/"
+        if testmode:
+            tempdir = "DVR3Dinterface/tests/testtemp/"
+
         # While doing test, the class was inited many times, but commands are duplicated for some reason
         if clearcmds:
             self.commands=[]
@@ -45,20 +56,29 @@ class CombinedInputInterface:
                     raise
                     
                 # Copy every line in this block to a temp file, untile next line start with &&
-                with open (Path("input/temp/temptxt{}.txt".format(taskcounter)),"w+",encoding="utf-8") as f:
+                with open (Path(tempdir+"temptxt{}.txt".format(taskcounter)),"w+",encoding="utf-8") as f:
                     while (linecounter+1 < len(lines) and lines[linecounter+1][:2]!="&&"):
                         linecounter+=1
                         f.write(lines[linecounter]+"\n")
 
                 
                 # convert to json
-                jsonpath = dp.txtToJson("input/temp/temptxt{}.txt".format(taskcounter))
+                jsonpath = dp.txtToJson(tempdir+"temptxt{}.txt".format(taskcounter))
 
                 # convert to job
                 with open (jsonpath) as f:
                     jsonobj = json.load(f)
-                dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]))
-                dvrparser.write(jsonobj, "input/temp/tempjob{}.job".format(taskcounter))
+                
+                # Problem with testing path
+                try:
+                    dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]))
+                except Exception as e:
+                    if testmod:
+                        dvrparser = dp.GeneralParser("DVR3Dinterface/configs/{}.json".format(sepLine[0]))
+                    else:
+                        raise
+
+                dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter))
 
                 # add a command to this object's command list
                 self.commands.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
