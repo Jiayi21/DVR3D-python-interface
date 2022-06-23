@@ -1,3 +1,4 @@
+from logging import exception
 from typing import Type
 import DVR3Dinterface.source_p.dvr3dparser as parser
 from pathlib import Path
@@ -43,3 +44,11 @@ def test_neg_WrongNum():
     with open (Path(tpath+"n_wrongNum.json")) as fin:
         with raises(json.JSONDecodeError) as exception:
             jsonfile = json.load(fin)
+
+def test_neg_WrongIntPRT():
+    # Some parameter in PRT must be int, should fail if other type is given
+    dvrparser = parser.GeneralParser(cpath)
+    with open (Path(tpath+"n_wrongIntPrt.json")) as fin:
+            jsonfile = json.load(fin)
+    with raises(TypeError) as exception:
+        dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/n_wrongIntPrt.job"))
