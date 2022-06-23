@@ -2,7 +2,7 @@ TOLER:"1.0d-4"
 ZPFUN:true
 ZTRAN:true
 ZDCORE:false
-NVIB:40
+NVIB:40.00
 NEVAL:30
 KMIN:2
 ! Testing comment line

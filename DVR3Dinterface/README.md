@@ -24,6 +24,10 @@ Example:
 ~~~~
 python .\parse.py input/example_rot.txt example_config -o example.job
 ~~~~
+This example code will print a warning message. This is designed to show the reaction of the code when an Integer is required but given a Float.
+ * Warning: Output format for NVIB is I5, given \<class 'float'\>
+
+In this case, code will not fail and output Float converted from Int, but the warning message will be print.
 
 ## Compiled binary
 Mostly same, but replace

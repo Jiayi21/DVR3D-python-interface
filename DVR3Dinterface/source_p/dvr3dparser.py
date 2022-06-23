@@ -3,6 +3,14 @@ from pathlib import Path
 import json
 import os
 
+# Print warning if input type and output data type is different
+def formatCheck(data,formatstr,varname):
+    if (formatstr[0] in ['F','D','f','d','E','e'] and type(data)!=float) \
+        or (formatstr[0] in ['I','i'] and type(data)!=int)\
+        or (formatstr[0] in ['L','l'] and type(data)!=bool) \
+        or (formatstr[0] in ['A','a'] and type(data)!=str):
+        print("Warning: Output format for {} is {}, given {}".format(varname, formatstr, type(data)))
+
 class GeneralParser:
     config = {}
 
@@ -49,6 +57,9 @@ class GeneralParser:
         writer = ffW(configsub["format"])
         for var in configsub["keylist"]:
             if var in data:
+                # Format check
+                formatCheck(data[var],configsub["format"],var)
+
                 filestream.write(writer.write([data[var]]))
                 countval+=1
             elif countval<configsub["minval"]:
@@ -69,6 +80,9 @@ class GeneralParser:
         countval = 0
         for var in configsub["keylist"]:
             if var in data:
+                # Format check
+                formatCheck(data[var],configsub["keylist"][var],var)
+
                 writer = ffW(configsub["keylist"][var])
                 filestream.write(writer.write([data[var]]))
                 countval+=1
