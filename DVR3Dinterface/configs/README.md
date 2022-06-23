@@ -35,8 +35,9 @@ PRT is used for NAMELIST in document, usually the first line.
 All arguments in keylist of this type of line is optional. Parser will not print warning for missing any of them.
 
 * **head**: The head of the line. Usually "&PRT" for the first line. In SPECTRA there is another namelist line, with head "&SPE"
-* **keylist_A**: All possible arguments which are not Boolean type. To keep accuracy, these arguments will be read by parser as String and directly written into job file without parsing.
-* **keylist_L**: Same as above, but value is only Boolean type.
+* **keylist_I**: \[Optional\] All possible arguments which are Integer type. If a non-int value was given an error will be raised
+* **keylist_A**: \[Optional\] All possible arguments which are not Boolean or Int type. To keep accuracy, these arguments will be read by parser as String and directly written into job file without parsing.
+* **keylist_L**: Same as above, but value is only Boolean type. Not optional but can be empty (ie. Must have a "keylist_L" key, but it's value can be empty list\[\])
 
 ---
 ### 2.VAL

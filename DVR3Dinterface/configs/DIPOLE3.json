@@ -2,7 +2,7 @@
     "LINE1": {
         "type": "PRT",
         "head": "&PRT",
-        "keylist_A": [
+        "keylist_I": [
             "IKET",
             "IBRA",
             "ITRA"

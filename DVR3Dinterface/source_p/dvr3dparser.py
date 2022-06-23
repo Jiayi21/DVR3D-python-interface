@@ -20,10 +20,19 @@ class GeneralParser:
     # Parse and print the NAMELIST line
     def __parPRT(self,configsub,data,filestream):
         filestream.write(" {} ".format(configsub["head"]))
+        # Check if Int type keylist is present in config
+        if "keylist_I" in configsub:
+            # Loop and print
+            for var in configsub["keylist_I"]:
+                if var in data:
+                    if type(data[var]) != int: raise TypeError("Type of {} must be int, got: {}".format(var, data[var]))
+                    filestream.write(var.lower()+"={}, ".format(data[var]))
+
         # Check keylist_A, all optional
-        for var in configsub["keylist_A"]:
-            if var in data:
-                filestream.write(var.lower()+"={}, ".format(data[var]))
+        if "keylist_A" in configsub:
+            for var in configsub["keylist_A"]:
+                if var in data:
+                    filestream.write(var.lower()+"={}, ".format(data[var]))
         
         # Check keylist_L, all optional
         for var in configsub["keylist_L"]:

@@ -2,7 +2,7 @@
   "LINE1": {
     "type": "PRT",
     "head":"&PRT",
-    "keylist_A": [
+    "keylist_I":[
       "ILEV",
       "IEIGS1",
       "IVECS1",
@@ -15,6 +15,7 @@
       "IOUT2",
       "IWAVE"
     ],
+    "keylist_A": [],
     "keylist_L": [
       "ZPHAM",
       "ZPRAD",
