@@ -136,5 +136,25 @@
     "keylist": {
       "EZERO": "F20.10"
     }
+  },
+  "OUTPUT_FILES":{
+    "type":"OUTPUT_FILES",
+    "fixed":{
+      "ILEV":14,
+      "IWAVE":26
+    },
+    "optional":{
+      "IEIGS1":7,
+      "IVECS1":3,
+      "IEIGS2":2,
+      "IVECS2":4,
+      "IOUT1":24,
+      "IOUT2":25
+    },
+    "scratch":{
+      "IVINT":17,
+      "IBAND":15,
+      "INTVEC":16
+    }
   }
 }

@@ -1,3 +1,4 @@
+from distutils.command.config import config
 from fortranformat import FortranRecordWriter as ffW
 from pathlib import Path
 import json
@@ -12,11 +13,29 @@ def formatCheck(data,formatstr,varname):
         print("Warning: Output format for {} is {}, given {}".format(varname, formatstr, type(data)))
 
 class GeneralParser:
+    # The loaded json config file
     config = {}
+    # copy commands for the output fort.X files
+    cpCMDs = []
+    # Three parameters affecting output filename
+    JROT = "x"
+    IDIA = "x"
+    PROJECT_NAME = "Unknown"
+    # Save all optional output files or not
+    saveOptional = False
 
     def __init__(self,config):
         with open (Path(config)) as f:
             self.config=json.load(f)
+
+    # Init and set the output copy rule
+    def __init__(self,config,JROT='x',IDIA='x',NAME="Unknown",svOp=False):
+        with open (Path(config)) as f:
+            self.config=json.load(f)
+        self.JROT = JROT
+        self.IDIA = IDIA
+        self.PROJECT_NAME = NAME
+        self.saveOptional = svOp
 
     def __PrtToStr(self,name,bol):
         if bol:
@@ -93,6 +112,72 @@ class GeneralParser:
 
         filestream.write("\n")
 
+    def __parOF(self,configsub,data):
+        # Process filename
+        if "PROJECT_NAME" in data:
+            if self.PROJECT_NAME != "Unknown":
+                print("Both input file and other input specified project name, use name from other source")
+            else:
+                self.PROJECT_NAME = data["PROJECT_NAME"]
+        else:
+            if self.PROJECT_NAME == "Unknown":
+                print("Warning: Project name not given, use \"Unknown\" by default")
+        # Check JROT and IDIA
+        if "JROT" in data:
+            if self.JROT != "x":
+                print("Both input file and other input specified JROT, use name from other source")
+            else:
+                self.JROT = data["JROT"]
+        else:
+            if self.JROT == "x":
+                print("Warning: JROT not given, use \"x\" by default")
+
+        if "IDIA" in data:
+            if self.IDIA != "x":
+                print("Both input file and other input specified IDIA, use name from other source")
+            else:
+                self.IDIA = data["IDIA"]
+        else:
+            if self.IDIA == "x":
+                print("Warning: IDIA not given, use \"x\" by default")
+        
+        # Construct filename
+        opfilename = "{}_J{}D{}".format(self.PROJECT_NAME,self.JROT,self.IDIA)
+
+        # Generate cp commands
+        for var in configsub["fixed"]:
+            fileNum = 0
+            # If input given number for this file, use the given one.
+            if var in data:
+                fileNum = data[var]
+            # If not, use the default value stored in OUTPUT_FILES of config JSON
+            else:
+                fileNum = configsub["fixed"][var]
+
+            varname = var
+            # If the variable name start with I then remove it
+            if varname[0] == "I": varname = varname[1:]
+
+            self.cpCMDs.append("cp fort.{} {}.{}".format(fileNum,opfilename,varname))
+
+        # The optional part
+        if self.saveOptional:
+            for var in configsub["optional"]:
+                fileNum = 0
+                # If input given number for this file, use the given one.
+                if var in data:
+                    fileNum = data[var]
+                # If not, use the default value stored in OUTPUT_FILES of config JSON
+                else:
+                    fileNum = configsub["optional"][var]
+
+                varname = var
+                # If the variable name start with I then remove it
+                if varname[0] == "I": varname = varname[1:]
+
+                self.cpCMDs.append("cp fort.{} {}.{}".format(fileNum,opfilename,varname))
+
+
 
     def write(self,input,output):
         with open (Path(output),"w+",encoding="utf-8") as f:
@@ -106,6 +191,8 @@ class GeneralParser:
                         self.__parTITLE(self.config[line],input,f)
                     elif self.config[line]["type"] == "CUS":
                         self.__parCUS(self.config[line],input,f)
+                    elif self.config[line]["type"] == "OUTPUT_FILES":
+                        self.__parOF(self.config[line],input)
                     else:
                         raise ValueError("Config type not found: {}".format(line))
                 except Exception as e:
