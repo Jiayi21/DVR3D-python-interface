@@ -1,6 +1,7 @@
 import argparse
 import source_p.combinedInputInterface as CII
 import os
+from pathlib import Path
 
 if __name__ == '__main__':
     # This parser is the commandline parser, not the DVR3D input parser
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Functional code start here
-    combinedII = CII.CombinedInputInterface(args.input)
+    combinedII = CII.CombinedInputInterface(args.input,saveOptional=args.saveStream)
     if args.pName: combinedII.PROJECT_NAME = args.pName
     if args.pJROT: combinedII.JROT = args.pJROT
     if args.pIDIA: combinedII.IDIA = args.pIDIA
@@ -36,13 +37,8 @@ if __name__ == '__main__':
     # Optional clearing temp folder
     combinedII.run(not args.temp)
 
+    # Run cp (rename) commands
+    # Optional clear all fort.X
+    combinedII.runCP(args.clearAll)
 
-    # Delete all fort.X file (renamed will not be affected)
-    if args.clearAll:
-        for f in os.listdir():
-            if f[:5] == "fort.":
-                try:
-                    os.remove(Path(f))
-                except Exception:
-                    print("Failed to remove: {}".format(f))
 

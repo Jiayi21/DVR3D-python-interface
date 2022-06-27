@@ -94,10 +94,14 @@ class CombinedInputInterface:
                         raise
                 
                 # Generate .job file
-                dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter))
+                try:
+                    dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter))
+                except Exception as e:
+                    print("Error at writing job file of task {}".format(taskcounter))
+                    raise
 
                 # gather commands to rename required files, already generated in dvrparser
-                self.cpCMDs += dvrparser.cpCMDs
+                self.cpCMDs.extend(dvrparser.cpCMDs) 
 
                 # add a command to this object's command list
                 self.commands.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
@@ -155,4 +159,19 @@ class CombinedInputInterface:
                     os.remove(dir.joinpath(f))
                 except Exception:
                     print("Failed to remove: {}".format(f))
+
+    def runCP(self, clearAll = False):
+        for cmd in self.cpCMDs:
+            code = os.system(cmd)
+            if code != 0:
+                print("Warning: Failed renaming: {}".format(cmd))
+        
+        # Delete all fort.X file (renamed will not be affected)
+        if clearAll:
+            for f in os.listdir():
+                if f[:5] == "fort.":
+                    try:
+                        os.remove(Path(f))
+                    except Exception:
+                        print("Failed to remove: {}".format(f))
     

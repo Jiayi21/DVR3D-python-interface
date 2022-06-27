@@ -25,11 +25,15 @@ class GeneralParser:
     saveOptional = False
 
     def __init__(self,config):
+        self.config = {}
+        self.cpCMDs = []
         with open (Path(config)) as f:
             self.config=json.load(f)
 
     # Init and set the output copy rule
     def __init__(self,config,JROT='x',IDIA='x',NAME="Unknown",svOp=False):
+        self.config = {}
+        self.cpCMDs = []
         with open (Path(config)) as f:
             self.config=json.load(f)
         self.JROT = JROT
