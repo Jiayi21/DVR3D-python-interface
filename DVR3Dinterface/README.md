@@ -1,6 +1,14 @@
 This page introduce how to run the interface code from commandline.
 
 Command "python script.py -h" can show help message for the script.
+
+## Contents
+* [parse.py](#parse.py)
+* [parseArun.py](#parseArun.py)
+* [parseBatchRun.py](#parsebatchrun.py)
+* [Renaming output files](#renaming-output-files)
+
+
 # parse.py
 This script is a separated commandline interface for the parser submodule "dvr3dparser.py".
 
@@ -71,4 +79,32 @@ Usage can be found by running with -h argument.
 example:
 ~~~~
 python parseBatchRun.py input/combined.txt -c
+~~~~
+
+# Renaming output files
+Some of the fort.X files are useful and act as part of output, or intermediate files for Fortran program. These files are renamed to a proper name specified in config files. The renaming follows:
+
+\<ProjectName\>_J\<JROT\>D\<IDIA\>.\<var name\>
+
+For exampe:
+
+HCN_J2D1.WAVE
+
+It requires three parts of information:
+* Project name
+* JROT
+* IDIA
+
+These variables could be provided within either "Fortran" block of combined input file, or anywhere in a single input file.
+
+Also, they can be manually given or overwrite by commandline arguments while running parseArun and parseBatch run.
+~~~~
+  --clearAll     If set, delete all fort.x file
+  --saveStream   If set, save "optional" stream fort.x files
+  --pName PNAME  Give, or overwrite project name, only affect copied fort.x
+                 file name
+  --pJROT PJROT  Give, or overwrite project JROT, only affect copied fort.x
+                 file name
+  --pIDIA PIDIA  Give, or overwrite project IDIA, only affect copied fort.x
+                 file name
 ~~~~
