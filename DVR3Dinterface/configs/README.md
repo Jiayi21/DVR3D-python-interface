@@ -20,6 +20,8 @@ Each config made up by lines, it has the same meaning as document.
 
 Each **line** must have a **type**. There are 4 types available for 4 differnt scheme of input: "PRT", "VAL", "TITLE" and "CUS"
 
+And a "OUTPUT_FILES" block specify which fort.X files will be renamed and saved.
+
 ## Line Type
 ### 1. PRT
 ~~~~
@@ -89,3 +91,23 @@ If the title is longer than 72 chars. It will be capped to 72.
 CUS is used for custimised line format. Similar to VAL, but argument in the line can have different format.
 
 As shown in the piece of config above, it does not have "format", but adding a format after each argument name after ":". Different argument name should separated comma.
+
+### OUTPUT_FILES
+~~~~
+"OUTPUT_FILES":{
+    "type":"OUTPUT_FILES",
+    "fixed":{
+        "KVEC":8,
+        "KVEC2":9
+    },
+    "opitonal":{
+        "IWAVE":26,
+        "JVEC":3
+    }
+}
+~~~~
+This is an example only. Beside the "type", it requires (Can be empty by using \{\}, but must be a key there)
+* fixed: These fort.X files will always be renamed
+* optional: These files will only be renamed if save optional flag is set in the commandline.
+
+This block also provide the default filename of fort.X of these argument(files). If the argument with the same name appears in other lines (ie the filename has been changed with new number after fort.), the changed one will be used.
