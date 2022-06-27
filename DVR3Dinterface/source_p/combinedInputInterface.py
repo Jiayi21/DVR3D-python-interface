@@ -13,11 +13,24 @@ import os
 class CombinedInputInterface:
     # Record the commandline to run
     commands = []
+    # copy commands for the output fort.X files
+    cpCMDs = []
+    # Three parameters affecting output filename
+    JROT = "x"
+    IDIA = "x"
+    PROJECT_NAME = "Unknown"
+    # Save all optional output files or not
+    saveOptional = False
 
-    def __init__(self,inputpath,clearcmds=True):
+    def __init__(self,inputpath,clearcmds=True,saveOptional = False):
+        self.saveOptional = saveOptional
+
         tempdir ="input/temp/"
         if testmode:
             tempdir = "DVR3Dinterface/tests/testtemp/"
+
+        # Scan for Project name, JROT and IDIA in input
+        self.specialScan(inputpath)
 
         # While doing test, the class was inited many times, but commands are duplicated for some reason
         if clearcmds:
@@ -71,14 +84,20 @@ class CombinedInputInterface:
                 
                 # Problem with testing path
                 try:
-                    dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]))
+                    dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]),\
+                                                self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
                 except Exception as e:
                     if testmod:
-                        dvrparser = dp.GeneralParser("DVR3Dinterface/configs/{}.json".format(sepLine[0]))
+                        dvrparser = dp.GeneralParser("DVR3Dinterface/configs/{}.json".format(sepLine[0]),\
+                                                self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
                     else:
                         raise
-
+                
+                # Generate .job file
                 dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter))
+
+                # gather commands to rename required files, already generated in dvrparser
+                self.cpCMDs += dvrparser.cpCMDs
 
                 # add a command to this object's command list
                 self.commands.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
@@ -90,6 +109,34 @@ class CombinedInputInterface:
             
             # Next line
             linecounter+=1
+
+    # Scan the input file, looking for PROJECT_NAME, JROT and IDIA for configuring filenames.
+    def specialScan(self,inputpath):
+        with open (Path(inputpath)) as f:
+            lines = f.readlines()
+        for line in lines:
+            # Search for Project name
+            if line[:12] == "PROJECT_NAME":
+                # use "-1" to remove "\n", and use replace to remove " from "HCN"
+                pN = str(line[13:-1]).replace("\"","")
+                if self.PROJECT_NAME != "Unknown" and self.PROJECT_NAME != pN:
+                    print("Warning: Multiple Project Name found, use {}, discard {}".format(self.PROJECT_NAME,pN))
+                else:
+                    self.PROJECT_NAME = pN
+            
+            # Do same for JROT and IDIA
+            if line[:4] == "JROT":
+                pJ = int(line[5:-1])
+                if self.JROT != "x" and self.JROT != pJ:
+                    print("Warning: Multiple Project JROT found, use {}, discard {}".format(self.JROT,pJ))
+                else:
+                    self.JROT = pJ
+            if line[:4] == "IDIA":
+                pI = int(line[5:-1])
+                if self.IDIA != "x" and self.IDIA != pI:
+                    print("Warning: Multiple Project IDIA found, use {}, discard {}".format(self.IDIA,pI))
+                else:
+                    self.IDIA = pI
     
     def printCommands(self):
         for cmd in self.commands:

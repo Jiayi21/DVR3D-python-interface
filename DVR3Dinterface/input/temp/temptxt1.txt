@@ -1,5 +1,7 @@
 ! Can use "!" to add comment
 ! Avoid having space between "&&" and "Fortran"
+PROJECT_NAME:"HCN"
+! project name can be in any fortran block
 ZROT:true
 ZTRAN:true
 ZLIN:true

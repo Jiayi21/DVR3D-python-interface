@@ -115,8 +115,8 @@ class GeneralParser:
     def __parOF(self,configsub,data):
         # Process filename
         if "PROJECT_NAME" in data:
-            if self.PROJECT_NAME != "Unknown":
-                print("Both input file and other input specified project name, use name from other source")
+            if self.PROJECT_NAME != "Unknown" and self.PROJECT_NAME != data["PROJECT_NAME"]:
+                print("Both input file and other input specified project name, use {} discard {}".format(self.PROJECT_NAME,data["PROJECT_NAME"]))
             else:
                 self.PROJECT_NAME = data["PROJECT_NAME"]
         else:
@@ -124,7 +124,7 @@ class GeneralParser:
                 print("Warning: Project name not given, use \"Unknown\" by default")
         # Check JROT and IDIA
         if "JROT" in data:
-            if self.JROT != "x":
+            if self.JROT != "x" and self.JROT != data["JROT"]:
                 print("Both input file and other input specified JROT, use name from other source")
             else:
                 self.JROT = data["JROT"]
@@ -133,7 +133,7 @@ class GeneralParser:
                 print("Warning: JROT not given, use \"x\" by default")
 
         if "IDIA" in data:
-            if self.IDIA != "x":
+            if self.IDIA != "x" and self.IDIA != data["IDIA"]:
                 print("Both input file and other input specified IDIA, use name from other source")
             else:
                 self.IDIA = data["IDIA"]
