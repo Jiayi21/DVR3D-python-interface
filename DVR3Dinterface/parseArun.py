@@ -39,6 +39,11 @@ if __name__ == '__main__':
     # Parse to the job file
     dvrparser.write(jsonin,Path("output/temp.job"))
 
+    # Display warning if either Renaming argument is unknown
+    if dvrparser.PROJECT_NAME == "Unknown": print("Warning: Project Name not given, will use Unknown")
+    if dvrparser.JROT == "Unknown": print("Warning: Project JROT not given, will use x for renaming files")
+    if dvrparser.IDIA == "Unknown": print("Warning: Project IDIA not given, will use x for renaming files")
+
     # Decide the output filename
     outfilename = args.config+".result"
     if (args.output):
@@ -63,7 +68,7 @@ if __name__ == '__main__':
         if rCode !=0:
             print("Renaming failed: {}".format(cpCMD))
     
-    # Delete other fort file
+    # Delete all fort.X file (renamed will not be affected)
     if args.clearAll:
         for f in os.listdir():
             if f[:5] == "fort.":
