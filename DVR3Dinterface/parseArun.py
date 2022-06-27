@@ -13,11 +13,22 @@ if __name__ == '__main__':
     parser.add_argument("-j","--job",action="store_true",help="If set, the temp.job file will not be removed")
     parser.add_argument("-m","--make",action="store_true",help="If set, run make Fsource before executing Fortran code")
 
+    parser.add_argument("--clearAll",action="store_true",help="If set, delete all fort.x file")
+    parser.add_argument("--saveStream",action="store_true",help="If set, save \"optional\" stream fort.x files")
+    parser.add_argument("--pName",help="Give, or overwrite project name, only affect copied fort.x file name")
+    parser.add_argument("--pJROT",help="Give, or overwrite project JROT, only affect copied fort.x file name")
+    parser.add_argument("--pIDIA",help="Give, or overwrite project IDIA, only affect copied fort.x file name")
+
     args = parser.parse_args()
 
     jsonfile = txtToJson(args.input)
     dvrparser = GeneralParser(Path("configs/"+args.config + ".json"))
 
+    # Set GeneralParser's parameter to generate the copy fort commands
+    if args.pName: dvrparser.PROJECT_NAME = args.pName
+    if args.pJROT: dvrparser.JROT = args.pJROT
+    if args.pIDIA: dvrparser.IDIA = args.pIDIA
+    if args.saveStream: dvrparser.saveOptional = args.saveStream
 
     # Convert input file to JSON to read
     with open (jsonfile) as f:
@@ -38,11 +49,28 @@ if __name__ == '__main__':
         os.system("make "+args.Fsource)
 
     # Run Fortran
-    os.system("./{} <output/temp.job> {}".format(args.Fsource, outfilename))
+    returncode = os.system("./{} <output/temp.job> {}".format(args.Fsource, outfilename))
+    if returncode !=0:
+        raise RuntimeError("Failure in Fortran running, code: {}".format(returncode))
 
     # Remove intermediate job file or not
     if not args.job:
         os.remove("output/temp.job")
+
+    # Copy and rename some fort files
+    for cpCMD in dvrparser.cpCMDs:
+        rCode = os.system(cpCMD)
+        if rCode !=0:
+            print("Renaming failed: {}".format(cpCMD))
+    
+    # Delete other fort file
+    if args.clearAll:
+        for f in os.listdir():
+            if f[:5] == "fort.":
+                try:
+                    os.remove(Path(f))
+                except Exception:
+                    print("Failed to remove: {}".format(f))
 
     print("Executing finished")
 

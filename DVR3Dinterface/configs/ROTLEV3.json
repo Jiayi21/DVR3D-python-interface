@@ -53,5 +53,20 @@
         "keylist": {
             "EZERO": "F20.10"
         }
+    },
+    "OUTPUT_FILES":{
+        "type":"OUTPUT_FILES",
+        "fixed":{
+            "KVEC":8,
+            "KVEC2":9,
+            "ILEV":14
+        },
+        "opitonal":{
+            "IWAVE":26,
+            "JVEC":3,
+            "JVEC2":2,
+            "ISCR":1,
+            "JSCR":7
+        }
     }
 }
