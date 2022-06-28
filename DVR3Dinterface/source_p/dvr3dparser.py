@@ -116,7 +116,7 @@ class GeneralParser:
 
         filestream.write("\n")
 
-    def __parOF(self,configsub,data):
+    def __parOF(self,configsub,data,noAsk = False):
         # Process filename
         if "PROJECT_NAME" in data:
             if self.PROJECT_NAME != "Unknown" and self.PROJECT_NAME != data["PROJECT_NAME"]:
@@ -145,6 +145,10 @@ class GeneralParser:
             if self.IDIA == "x":
                 print("Warning: IDIA not given, use \"x\" by default")
         
+        # If missing any part of file name, ask user.
+        if not noAsk:
+            self.askForFileNameCheck()
+
         # Construct filename
         opfilename = "{}_J{}D{}".format(self.PROJECT_NAME,self.JROT,self.IDIA)
 
@@ -183,7 +187,7 @@ class GeneralParser:
 
 
 
-    def write(self,input,output):
+    def write(self,input,output,noAsk = False):
         with open (Path(output),"w+",encoding="utf-8") as f:
             for line in self.config:
                 try:
@@ -196,12 +200,45 @@ class GeneralParser:
                     elif self.config[line]["type"] == "CUS":
                         self.__parCUS(self.config[line],input,f)
                     elif self.config[line]["type"] == "OUTPUT_FILES":
-                        self.__parOF(self.config[line],input)
+                        self.__parOF(self.config[line],input,noAsk)
                     else:
                         raise ValueError("Config type not found: {}".format(line))
                 except Exception as e:
                     print("Error parsing {}: {}".format(line,e))
                     raise
+
+    # If one of the three part of file name is missing, ask user to input one
+    def askForFileNameCheck(self):
+        if self.PROJECT_NAME == "Unknown":
+            keyin = input("Input project name: \n")
+            self.PROJECT_NAME = keyin
+        if self.JROT == "x":
+            verified = False
+            keyin = ''
+            while (not verified):
+                verified = True
+                keyin = input("Input JROT (For filename only): \n")
+                try:
+                    keyin = int(keyin)
+                except Exception:
+                    print("JROT must be an int")
+                    verified = False
+                    continue
+            self.JROT = keyin
+
+        if self.IDIA == "x":
+            verified = False
+            keyin = ''
+            while (not verified):
+                verified = True
+                keyin = input("Input IDIA (For filename only): \n")
+                try:
+                    keyin = int(keyin)
+                except Exception:
+                    print("IDIA must be an int")
+                    verified = False
+                    continue
+            self.IDIA = keyin
 
 def txtToJson(filepath):
     pathin = Path(filepath)

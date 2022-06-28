@@ -15,6 +15,7 @@ if __name__ == '__main__':
 
     parser.add_argument("--clearAll",action="store_true",help="If set, delete all fort.x file")
     parser.add_argument("--saveStream",action="store_true",help="If set, save \"optional\" stream fort.x files")
+    parser.add_argument("--noAsk",action="store_true",help="If set and any of three part of Filename is missing, don't ask and use the default")
     parser.add_argument("--pName",help="Give, or overwrite project name, only affect copied fort.x file name")
     parser.add_argument("--pJROT",help="Give, or overwrite project JROT, only affect copied fort.x file name")
     parser.add_argument("--pIDIA",help="Give, or overwrite project IDIA, only affect copied fort.x file name")
@@ -37,12 +38,12 @@ if __name__ == '__main__':
     os.remove(jsonfile)
     
     # Parse to the job file
-    dvrparser.write(jsonin,Path("output/temp.job"))
+    dvrparser.write(jsonin,Path("output/temp.job"),noAsk=args.noAsk)
 
-    # Display warning if either Renaming argument is unknown
-    if dvrparser.PROJECT_NAME == "Unknown": print("Warning: Project Name not given, will use Unknown")
-    if dvrparser.JROT == "Unknown": print("Warning: Project JROT not given, will use x for renaming files")
-    if dvrparser.IDIA == "Unknown": print("Warning: Project IDIA not given, will use x for renaming files")
+    # # Display warning if either Renaming argument is unknown
+    # if dvrparser.PROJECT_NAME == "Unknown": print("Warning: Project Name not given, will use Unknown")
+    # if dvrparser.JROT == "Unknown": print("Warning: Project JROT not given, will use x for renaming files")
+    # if dvrparser.IDIA == "Unknown": print("Warning: Project IDIA not given, will use x for renaming files")
 
     # Decide the output filename
     outfilename = args.config+".result"

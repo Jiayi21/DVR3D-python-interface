@@ -22,7 +22,7 @@ class CombinedInputInterface:
     # Save all optional output files or not
     saveOptional = False
 
-    def __init__(self,inputpath,clearcmds=True,saveOptional = False):
+    def __init__(self,inputpath,clearcmds=True,saveOptional = False, noAsk = False):
         self.saveOptional = saveOptional
 
         tempdir ="input/temp/"
@@ -31,6 +31,10 @@ class CombinedInputInterface:
 
         # Scan for Project name, JROT and IDIA in input
         self.specialScan(inputpath)
+
+        # Ask user to input if the three part of filename is not fully given
+        if not noAsk:
+            self.askForFileNameCheck()
 
         # While doing test, the class was inited many times, but commands are duplicated for some reason
         if clearcmds:
@@ -113,6 +117,39 @@ class CombinedInputInterface:
             
             # Next line
             linecounter+=1
+
+    # If one of the three part of file name is missing, ask user to input one
+    def askForFileNameCheck(self):
+        if self.PROJECT_NAME == "Unknown":
+            keyin = input("Input project name: \n")
+            self.PROJECT_NAME = keyin
+        if self.JROT == "x":
+            verified = False
+            keyin = ''
+            while (not verified):
+                verified = True
+                keyin = input("Input JROT (For filename only): \n")
+                try:
+                    keyin = int(keyin)
+                except Exception:
+                    print("JROT must be an int")
+                    verified = False
+                    continue
+            self.JROT = keyin
+
+        if self.IDIA == "x":
+            verified = False
+            keyin = ''
+            while (not verified):
+                verified = True
+                keyin = input("Input IDIA (For filename only): \n")
+                try:
+                    keyin = int(keyin)
+                except Exception:
+                    print("IDIA must be an int")
+                    verified = False
+                    continue
+            self.IDIA = keyin
 
     # Scan the input file, looking for PROJECT_NAME, JROT and IDIA for configuring filenames.
     def specialScan(self,inputpath):
