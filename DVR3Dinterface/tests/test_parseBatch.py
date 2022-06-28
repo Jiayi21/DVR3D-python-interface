@@ -18,3 +18,8 @@ def test_positive():
     assert filecmp.cmp(tempPath+"job1positive.job", tempPath+"tempjob1.job")
     assert filecmp.cmp(tempPath+"job2positive.job", tempPath+"tempjob2.job")
     
+def test_positive_pickFileNameArg():
+    testCII = CII.CombinedInputInterface(inputPath+"positive.txt")
+    assert testCII.PROJECT_NAME=="TEST"
+    assert testCII.JROT == 2
+    assert testCII.IDIA == 1

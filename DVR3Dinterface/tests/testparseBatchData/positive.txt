@@ -14,6 +14,8 @@ IBASS:120
 NEVAL2:20
 TITLE:"HCN rovib J=2 e and f"
 EZERO:3481.50552084
+! Added for test: IDIA
+IDIA:1
 
 ! Not testing parsing, but read this file, generate separated job file and commandline instructions
 
@@ -28,3 +30,6 @@ NPOT:60
 NV1:30
 NV2:20
 EZERO:3481.50552084
+! For testing, the Project Name is added in the second task instead of the first.
+PROJECT_NAME:"TEST"
+JROT:2
