@@ -108,3 +108,6 @@ Also, they can be manually given or overwrite by commandline arguments while run
   --pIDIA PIDIA  Give, or overwrite project IDIA, only affect copied fort.x
                  file name
 ~~~~
+If there are multiple different parts exist, prioritizing follows:
+
+Manually given through command line > First block of data input having this argument > Others
