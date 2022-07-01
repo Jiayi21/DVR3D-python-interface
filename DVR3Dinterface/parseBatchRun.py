@@ -14,19 +14,10 @@ if __name__ == '__main__':
 
     parser.add_argument("--clearAll",action="store_true",help="If set, delete all fort.x file")
     parser.add_argument("--saveStream",action="store_true",help="If set, save \"optional\" stream fort.x files")
-    parser.add_argument("--noAsk",action="store_true",help="If set and any of three part of Filename is missing, don't ask and use the default")
-    parser.add_argument("--pName",help="Give, or overwrite project name, only affect copied fort.x file name")
-    parser.add_argument("--pJROT",help="Give, or overwrite project JROT, only affect copied fort.x file name")
-    parser.add_argument("--pIDIA",help="Give, or overwrite project IDIA, only affect copied fort.x file name")
-
     args = parser.parse_args()
 
     # Functional code start here
-    combinedII = CII.CombinedInputInterface(args.input,saveOptional=args.saveStream,noAsk=args.noAsk)
-    if args.pName: combinedII.PROJECT_NAME = args.pName
-    if args.pJROT: combinedII.JROT = args.pJROT
-    if args.pIDIA: combinedII.IDIA = args.pIDIA
-    if args.saveStream: combinedII.saveOptional = args.saveStream
+    combinedII = CII.CombinedInputInterface(args.input,saveOptional=args.saveStream)
 
     # Optional print instructions that will be run in commandline
     if args.cmds:
@@ -36,10 +27,6 @@ if __name__ == '__main__':
     
     # Run commandline (Fortran, cp...)
     # Optional clearing temp folder
-    combinedII.run(not args.temp)
-
-    # Run cp (rename) commands
     # Optional clear all fort.X
-    combinedII.runCP(args.clearAll)
-
+    combinedII.run(not args.temp, args.clearAll)
 

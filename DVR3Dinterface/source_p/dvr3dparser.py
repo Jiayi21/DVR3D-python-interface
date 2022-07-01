@@ -147,7 +147,7 @@ class GeneralParser:
             # If the variable name start with I then remove it
             if varname[0] == "I": varname = varname[1:]
 
-            self.cpCMDs.append("cp fort.{} {}.{}".format(fileNum,opfilename,varname))
+            self.cpCMDs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
 
         # The optional part
         if self.saveOptional:
@@ -164,7 +164,7 @@ class GeneralParser:
                 # If the variable name start with I then remove it
                 if varname[0] == "I": varname = varname[1:]
 
-                self.cpCMDs.append("cp fort.{} {}.{}".format(fileNum,opfilename,varname))
+                self.cpCMDs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
 
 
 

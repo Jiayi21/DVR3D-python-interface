@@ -23,17 +23,17 @@ def test_positive_renaming():
     with open (Path(tpath+"positive.json")) as fin:
         jsonfile = json.load(fin)
     dvrparser.write(jsonfile,Path(tpath+"PositiveTest.job"),noAsk=True)
-    assert dvrparser.cpCMDs == ['cp fort.14 Unknown_J2D1.LEV', 'cp fort.26 Unknown_J2D1.WAVE']
+    assert dvrparser.cpCMDs == [('fort.14', 'Unknown_J2D1.LEV'), ('fort.26', 'Unknown_J2D1.WAVE')]
 
 def test_positive_renaming_optional():
     dvrparser = parser.GeneralParser(cpath,NAME="TEST",svOp=True)
     with open (Path(tpath+"positive.json")) as fin:
         jsonfile = json.load(fin)
     dvrparser.write(jsonfile,Path(tpath+"PositiveTest.job"),noAsk=True)
-    assert dvrparser.cpCMDs == ['cp fort.14 TEST_J2D1.LEV', 'cp fort.26 TEST_J2D1.WAVE', 
-                            'cp fort.7 TEST_J2D1.EIGS1', 'cp fort.3 TEST_J2D1.VECS1', 
-                            'cp fort.2 TEST_J2D1.EIGS2', 'cp fort.4 TEST_J2D1.VECS2', 
-                            'cp fort.24 TEST_J2D1.OUT1', 'cp fort.25 TEST_J2D1.OUT2']
+    assert dvrparser.cpCMDs == [('fort.14', 'TEST_J2D1.LEV'),('fort.26', 'TEST_J2D1.WAVE'),\
+                                ('fort.7', 'TEST_J2D1.EIGS1'),('fort.3', 'TEST_J2D1.VECS1'),\
+                                ('fort.2', 'TEST_J2D1.EIGS2'),('fort.4', 'TEST_J2D1.VECS2'),\
+                                ('fort.24', 'TEST_J2D1.OUT1'),('fort.25', 'TEST_J2D1.OUT2')]
 
 
 def test_IntToFloat():

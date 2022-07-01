@@ -1,4 +1,4 @@
-&&Fortran DVR3DJZ ./dvr.out outname=output1_manual.result
+&&Fortran DVR3DJZ ./dvr.out outname=result_HCN_J2D1.DVR3DJZ
 ! Can use "!" to add comment
 ! Avoid having space between "&&" and "Fortran"
 PROJECT_NAME:"HCN"
@@ -94,3 +94,5 @@ EMAX1:"60000.0d6"
 EMAX2:"60000.0d6"
 ZPROF:true
 ZPLOT:true
+
+&&Execute

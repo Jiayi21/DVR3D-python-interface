@@ -57,7 +57,7 @@ class CombinedInputInterface:
                 sepLine = line[10:].split(" ")
 
                 # Optional argument:
-                outname = "output{}.result".format(taskcounter)
+                outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
                 try:
                     # Check for optional argument
                     if len(sepLine)>2:
@@ -104,7 +104,7 @@ class CombinedInputInterface:
                 [self.PROJECT_NAME,self.JROT,self.IDIA] = dvrparser.getFileNamePRT()
 
                 # gather commands to rename required files, already generated in dvrparser
-                self.cpCMDs_grp.append(dvrparser.cpCMDs) 
+                self.cpCMDs_grp.extend(dvrparser.cpCMDs) 
 
                 # add a command to this object's command list
                 self.commands_grp.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
@@ -125,8 +125,10 @@ class CombinedInputInterface:
             linecounter+=1
     
     def printCommands(self):
-        for cmd in self.commands:
-            print(cmd)
+        for cmds in self.commands:
+            for cmd in cmds:
+                print(cmd)
+            print("=========")
 
     def run(self, clearTemp = True, clearAll = False):
         # Run group by group
@@ -140,10 +142,15 @@ class CombinedInputInterface:
                 code = os.system(cmd)
                 if code != 0:
                     raise RuntimeError("Error code {} on running: {}".format(code,cmd))
+            # Remove duplicated renaming commands     
+            self.cpCMDs[i] = list(set(self.cpCMDs[i]))
+            
             for cmd in self.cpCMDs[i]:
-                code = os.system(cmd)
-                if code != 0:
+                try:
+                    os.rename(cmd[0],cmd[1])
+                except Exception:
                     print("Warning: Failed renaming: {}".format(cmd))
+                    raise
         
         if clearTemp:
             dir = Path("input/temp")
