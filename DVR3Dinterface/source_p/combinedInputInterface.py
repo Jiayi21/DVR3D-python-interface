@@ -55,18 +55,6 @@ class CombinedInputInterface:
             elif line[2:9]=="Fortran":
                 taskcounter+=1
                 sepLine = line[10:].split(" ")
-
-                # Optional argument:
-                outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
-                try:
-                    # Check for optional argument
-                    if len(sepLine)>2:
-                        for argstr in sepLine[2:]:
-                            [arg, val] = argstr.split("=")
-                            if arg=="outname": outname = val
-                except Exception as e:
-                    print("Error reading block argument: {}".format(line))
-                    raise
                     
                 # Copy every line in this block to a temp file, untile next line start with &&
                 with open (Path(tempdir+"temptxt{}.txt".format(taskcounter)),"w+",encoding="utf-8") as f:
@@ -105,6 +93,18 @@ class CombinedInputInterface:
 
                 # gather commands to rename required files, already generated in dvrparser
                 self.cpCMDs_grp.extend(dvrparser.cpCMDs) 
+
+                # Optional argument:
+                outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
+                try:
+                    # Check for optional argument
+                    if len(sepLine)>2:
+                        for argstr in sepLine[2:]:
+                            [arg, val] = argstr.split("=")
+                            if arg=="outname": outname = val
+                except Exception as e:
+                    print("Error reading block argument: {}".format(line))
+                    raise
 
                 # add a command to this object's command list
                 self.commands_grp.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))

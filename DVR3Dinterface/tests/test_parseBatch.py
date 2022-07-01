@@ -11,10 +11,10 @@ tempPath = "DVR3Dinterface/tests/testtemp/"
 
 def test_positive():
     testCII = CII.CombinedInputInterface(inputPath+"positive.txt")
-    assert testCII.commands == [['./rot.out <input/temp/tempjob1.job> result_Unknown_JxDx.ROTLEV3', 
+    assert testCII.commands == [['./rot.out <input/temp/tempjob1.job> result_Unknown_JxD1.ROTLEV3', 
                                 'cp fort.8 fort.11', 
                                 'cp fort.9 fort.12', 
-                                './dip.out <input/temp/tempjob2.job> result_Unknown_JxD1.DIPOLE3']]
+                                './dip.out <input/temp/tempjob2.job> result_TEST_J2D1.DIPOLE3']]
     assert filecmp.cmp(tempPath+"job1positive.job", tempPath+"tempjob1.job")
     assert filecmp.cmp(tempPath+"job2positive.job", tempPath+"tempjob2.job")
     
@@ -23,3 +23,10 @@ def test_positive_pickFileNameArg():
     assert testCII.PROJECT_NAME=="TEST"
     assert testCII.JROT == 2
     assert testCII.IDIA == 1
+
+def test_positive_ChangedFilename():
+    testCII = CII.CombinedInputInterface(inputPath+"changedFilename.txt")
+    assert testCII.commands == [['./rot.out <input/temp/tempjob1.job> result_Unknown_JxD1.ROTLEV3'], 
+                                ['cp fort.8 fort.11', 
+                                'cp fort.9 fort.12', 
+                                './dip.out <input/temp/tempjob2.job> result_TEST_J2D-2.DIPOLE3']]

@@ -1,4 +1,4 @@
- &PRT toler=1.0d-4, ztran=.true., zpfun=.true., zdcore=.false.,  / 
-   40   30    2  120   20
-HCN rovib J=2 e and f
+ &PRT iket=8, ibra=9,  / 
+HCN DIPOLE MOMENT J 2-2 f-e parity
+   60   30   20
      3481.5055208400
