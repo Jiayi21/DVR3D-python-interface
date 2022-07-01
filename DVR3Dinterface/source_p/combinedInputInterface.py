@@ -150,8 +150,18 @@ class CombinedInputInterface:
                     os.rename(cmd[0],cmd[1])
                 except Exception:
                     print("Warning: Failed renaming: {}".format(cmd))
-                    raise
-        
+                    pass
+
+            # Delete all fort.X file (renamed will not be affected)
+            if clearAll:
+                for f in os.listdir():
+                    if f[:5] == "fort.":
+                        try:
+                            os.remove(Path(f))
+                        except Exception:
+                            print("Failed to remove: {}".format(f))
+                            pass
+
         if clearTemp:
             dir = Path("input/temp")
             for f in os.listdir(dir):
@@ -160,11 +170,3 @@ class CombinedInputInterface:
                 except Exception:
                     print("Failed to remove: {}".format(f))
         
-        # Delete all fort.X file (renamed will not be affected)
-        if clearAll:
-            for f in os.listdir():
-                if f[:5] == "fort.":
-                    try:
-                        os.remove(Path(f))
-                    except Exception:
-                        print("Failed to remove: {}".format(f))

@@ -12,7 +12,7 @@ if __name__ == '__main__':
     parser.add_argument("-t","--temp",action="store_true",help="Everything in temp will be cleared by default. If set, they will not be removed.")
     parser.add_argument("-c","--cmds",action="store_true",help="If set, print the commandline instructions for debuging purpose")
 
-    parser.add_argument("--clearAll",action="store_true",help="If set, delete all fort.x file")
+    parser.add_argument("--clearAll",action="store_true",help="If set, delete all fort.x file AFTER EACH \"Execute\"")
     parser.add_argument("--saveStream",action="store_true",help="If set, save \"optional\" stream fort.x files")
     args = parser.parse_args()
 
