@@ -12,9 +12,11 @@ import os
 
 class CombinedInputInterface:
     # Record the commandline to run
-    commands = []
+    commands = [] # A List of List of commands. This two-level structure allows execute all commands group by group
+    commands_grp = [] # cache a number of blocks before been put into commands
     # copy commands for the output fort.X files
     cpCMDs = []
+    cpCMDs_grp = []
     # Three parameters affecting output filename
     JROT = "x"
     IDIA = "x"
@@ -22,23 +24,17 @@ class CombinedInputInterface:
     # Save all optional output files or not
     saveOptional = False
 
-    def __init__(self,inputpath,clearcmds=True,saveOptional = False, noAsk = False):
+    def __init__(self,inputpath,clearcmds=True,saveOptional = False):
         self.saveOptional = saveOptional
 
         tempdir ="input/temp/"
         if testmode:
             tempdir = "DVR3Dinterface/tests/testtemp/"
 
-        # Scan for Project name, JROT and IDIA in input
-        self.specialScan(inputpath)
-
-        # Ask user to input if the three part of filename is not fully given
-        if not noAsk:
-            self.askForFileNameCheck()
-
         # While doing test, the class was inited many times, but commands are duplicated for some reason
         if clearcmds:
             self.commands=[]
+            self.commands_grp = []
 
         # Open the file read every line into a vector
         lines = open(Path(inputpath)).read().splitlines()
@@ -99,95 +95,55 @@ class CombinedInputInterface:
                 
                 # Generate .job file
                 try:
-                    dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter))
+                    dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter),noAsk=True)
                 except Exception as e:
                     print("Error at writing job file of task {}".format(taskcounter))
                     raise
 
+                # Update the default filenames
+                [self.PROJECT_NAME,self.JROT,self.IDIA] = dvrparser.getFileNamePRT()
+
                 # gather commands to rename required files, already generated in dvrparser
-                self.cpCMDs.extend(dvrparser.cpCMDs) 
+                self.cpCMDs_grp.append(dvrparser.cpCMDs) 
 
                 # add a command to this object's command list
-                self.commands.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
+                self.commands_grp.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
 
+            elif line[2:9]=="Execute":
+                # An Execute in input means execute all everything before last Execute
+                # Here we put group of commands in to that "List of List", then it can be run by groups later
+                self.commands.append(self.commands_grp)
+                self.commands_grp = []
+                self.cpCMDs.append(self.cpCMDs_grp)
+                self.cpCMDs_grp = []
 
             # If not &&Fortran, then it is a command to directly run
             else:
-                self.commands.append(line[2:])
+                self.commands_grp.append(line[2:])
             
             # Next line
             linecounter+=1
-
-    # If one of the three part of file name is missing, ask user to input one
-    def askForFileNameCheck(self):
-        if self.PROJECT_NAME == "Unknown":
-            keyin = input("Input project name: \n")
-            self.PROJECT_NAME = keyin
-        if self.JROT == "x":
-            verified = False
-            keyin = ''
-            while (not verified):
-                verified = True
-                keyin = input("Input JROT (For filename only): \n")
-                try:
-                    keyin = int(keyin)
-                except Exception:
-                    print("JROT must be an int")
-                    verified = False
-                    continue
-            self.JROT = keyin
-
-        if self.IDIA == "x":
-            verified = False
-            keyin = ''
-            while (not verified):
-                verified = True
-                keyin = input("Input IDIA (For filename only): \n")
-                try:
-                    keyin = int(keyin)
-                except Exception:
-                    print("IDIA must be an int")
-                    verified = False
-                    continue
-            self.IDIA = keyin
-
-    # Scan the input file, looking for PROJECT_NAME, JROT and IDIA for configuring filenames.
-    def specialScan(self,inputpath):
-        with open (Path(inputpath)) as f:
-            lines = f.readlines()
-        for line in lines:
-            # Search for Project name
-            if line[:12] == "PROJECT_NAME":
-                # use "-1" to remove "\n", and use replace to remove " from "HCN"
-                pN = str(line[13:-1]).replace("\"","")
-                if self.PROJECT_NAME != "Unknown" and self.PROJECT_NAME != pN:
-                    print("Warning: Multiple Project Name found, use {}, discard {}".format(self.PROJECT_NAME,pN))
-                else:
-                    self.PROJECT_NAME = pN
-            
-            # Do same for JROT and IDIA
-            if line[:4] == "JROT":
-                pJ = int(line[5:-1])
-                if self.JROT != "x" and self.JROT != pJ:
-                    print("Warning: Multiple Project JROT found, use {}, discard {}".format(self.JROT,pJ))
-                else:
-                    self.JROT = pJ
-            if line[:4] == "IDIA":
-                pI = int(line[5:-1])
-                if self.IDIA != "x" and self.IDIA != pI:
-                    print("Warning: Multiple Project IDIA found, use {}, discard {}".format(self.IDIA,pI))
-                else:
-                    self.IDIA = pI
     
     def printCommands(self):
         for cmd in self.commands:
             print(cmd)
 
-    def run(self, clearTemp = True):
-        for cmd in self.commands:
-            code = os.system(cmd)
-            if code != 0:
-                raise RuntimeError("Error code {} on running: {}".format(code,cmd))
+    def run(self, clearTemp = True, clearAll = False):
+        # Run group by group
+        if len(self.cpCMDs) != len(self.commands):
+            print("Warning: Renaming and Executing commands have different number of groups")
+
+        # Loop groups
+        for i in range(len(self.commands)):
+            # Loop instructions in group
+            for cmd in self.commands[i]:
+                code = os.system(cmd)
+                if code != 0:
+                    raise RuntimeError("Error code {} on running: {}".format(code,cmd))
+            for cmd in self.cpCMDs[i]:
+                code = os.system(cmd)
+                if code != 0:
+                    print("Warning: Failed renaming: {}".format(cmd))
         
         if clearTemp:
             dir = Path("input/temp")
@@ -196,12 +152,6 @@ class CombinedInputInterface:
                     os.remove(dir.joinpath(f))
                 except Exception:
                     print("Failed to remove: {}".format(f))
-
-    def runCP(self, clearAll = False):
-        for cmd in self.cpCMDs:
-            code = os.system(cmd)
-            if code != 0:
-                print("Warning: Failed renaming: {}".format(cmd))
         
         # Delete all fort.X file (renamed will not be affected)
         if clearAll:
@@ -211,4 +161,3 @@ class CombinedInputInterface:
                         os.remove(Path(f))
                     except Exception:
                         print("Failed to remove: {}".format(f))
-    

@@ -117,33 +117,14 @@ class GeneralParser:
         filestream.write("\n")
 
     def __parOF(self,configsub,data,noAsk = False):
-        # Process filename
+        # Process filename data
+        # Always replace the old name if new was given.
         if "PROJECT_NAME" in data:
-            if self.PROJECT_NAME != "Unknown" and self.PROJECT_NAME != data["PROJECT_NAME"]:
-                print("Both input file and other input specified project name, use {} discard {}".format(self.PROJECT_NAME,data["PROJECT_NAME"]))
-            else:
-                self.PROJECT_NAME = data["PROJECT_NAME"]
-        else:
-            if self.PROJECT_NAME == "Unknown":
-                print("Warning: Project name not given, use \"Unknown\" by default")
-        # Check JROT and IDIA
+            self.PROJECT_NAME = data["PROJECT_NAME"]
         if "JROT" in data:
-            if self.JROT != "x" and self.JROT != data["JROT"]:
-                print("Both input file and other input specified JROT, use name from other source")
-            else:
-                self.JROT = data["JROT"]
-        else:
-            if self.JROT == "x":
-                print("Warning: JROT not given, use \"x\" by default")
-
+            self.JROT = data["JROT"]
         if "IDIA" in data:
-            if self.IDIA != "x" and self.IDIA != data["IDIA"]:
-                print("Both input file and other input specified IDIA, use name from other source")
-            else:
-                self.IDIA = data["IDIA"]
-        else:
-            if self.IDIA == "x":
-                print("Warning: IDIA not given, use \"x\" by default")
+            self.IDIA = data["IDIA"]
         
         # If missing any part of file name, ask user.
         if not noAsk:
@@ -239,6 +220,10 @@ class GeneralParser:
                     verified = False
                     continue
             self.IDIA = keyin
+    
+    # Get Projectname, JROT, IDIA for filenaming
+    def getFileNamePRT(self):
+        return [self.PROJECT_NAME,self.JROT,self.IDIA]
 
 def txtToJson(filepath):
     pathin = Path(filepath)

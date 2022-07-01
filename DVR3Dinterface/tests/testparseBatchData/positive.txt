@@ -33,3 +33,5 @@ EZERO:3481.50552084
 ! For testing, the Project Name is added in the second task instead of the first.
 PROJECT_NAME:"TEST"
 JROT:2
+
+&&Execute

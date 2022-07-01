@@ -11,10 +11,10 @@ tempPath = "DVR3Dinterface/tests/testtemp/"
 
 def test_positive():
     testCII = CII.CombinedInputInterface(inputPath+"positive.txt")
-    assert testCII.commands == ['./rot.out <input/temp/tempjob1.job> output1.result', 
+    assert testCII.commands == [['./rot.out <input/temp/tempjob1.job> output1.result', 
                                 'cp fort.8 fort.11', 
                                 'cp fort.9 fort.12', 
-                                './dip.out <input/temp/tempjob2.job> output2.result']
+                                './dip.out <input/temp/tempjob2.job> output2.result']]
     assert filecmp.cmp(tempPath+"job1positive.job", tempPath+"tempjob1.job")
     assert filecmp.cmp(tempPath+"job2positive.job", tempPath+"tempjob2.job")
     
