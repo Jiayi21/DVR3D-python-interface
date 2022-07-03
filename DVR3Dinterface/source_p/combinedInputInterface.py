@@ -15,8 +15,8 @@ class CombinedInputInterface:
     commands = [] # A List of List of commands. This two-level structure allows execute all commands group by group
     commands_grp = [] # cache a number of blocks before been put into commands
     # copy commands for the output fort.X files
-    cpCMDs = []
-    cpCMDs_grp = []
+    RE_PAIRs = []
+    RE_PAIRs_grp = []
     # Three parameters affecting output filename
     JROT = "x"
     IDIA = "x"
@@ -92,7 +92,7 @@ class CombinedInputInterface:
                 [self.PROJECT_NAME,self.JROT,self.IDIA] = dvrparser.getFileNamePRT()
 
                 # gather commands to rename required files, already generated in dvrparser
-                self.cpCMDs_grp.extend(dvrparser.cpCMDs) 
+                self.RE_PAIRs_grp.extend(dvrparser.RE_PAIRs) 
 
                 # Optional argument:
                 outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
@@ -114,8 +114,8 @@ class CombinedInputInterface:
                 # Here we put group of commands in to that "List of List", then it can be run by groups later
                 self.commands.append(self.commands_grp)
                 self.commands_grp = []
-                self.cpCMDs.append(self.cpCMDs_grp)
-                self.cpCMDs_grp = []
+                self.RE_PAIRs.append(self.RE_PAIRs_grp)
+                self.RE_PAIRs_grp = []
 
             # If not &&Fortran, then it is a command to directly run
             else:
@@ -132,7 +132,7 @@ class CombinedInputInterface:
 
     def run(self, clearTemp = True, clearAll = False):
         # Run group by group
-        if len(self.cpCMDs) != len(self.commands):
+        if len(self.RE_PAIRs) != len(self.commands):
             print("Warning: Renaming and Executing commands have different number of groups")
 
         # Loop groups
@@ -143,9 +143,9 @@ class CombinedInputInterface:
                 if code != 0:
                     raise RuntimeError("Error code {} on running: {}".format(code,cmd))
             # Remove duplicated renaming commands     
-            self.cpCMDs[i] = list(set(self.cpCMDs[i]))
+            self.RE_PAIRs[i] = list(set(self.RE_PAIRs[i]))
             
-            for cmd in self.cpCMDs[i]:
+            for cmd in self.RE_PAIRs[i]:
                 try:
                     os.rename(cmd[0],cmd[1])
                 except Exception:

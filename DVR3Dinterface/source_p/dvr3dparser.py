@@ -12,11 +12,20 @@ def formatCheck(data,formatstr,varname):
         or (formatstr[0] in ['A','a'] and type(data)!=str):
         print("Warning: Output format for {} is {}, given {}".format(varname, formatstr, type(data)))
 
+# This class aims at parsing input file, get required data and "operations" from it.
+# Although the commandline interface parse and parseArun use this class only
+# It is not designed to be used directly, i.e. have no run() method.
+# This can easily be added in the future if required, by collecting code from paseArun.
 class GeneralParser:
     # The loaded json config file
     config = {}
-    # copy commands for the output fort.X files
-    cpCMDs = []
+    # In early stage this is the console commands of copying files named "cpCMDs"
+    # Now, these are Tuples of filenames, for renaming via python OS lib.
+    RE_PAIRs = []
+    # Link pairs, create alternate "path" to a single file. 
+    # Not commands, are Tuples to be linked by OS lib.
+    LK_PAIRs = []
+
     # Three parameters affecting output filename
     JROT = "x"
     IDIA = "x"
@@ -24,18 +33,20 @@ class GeneralParser:
     # Save all optional output files or not
     saveOptional = False
 
-    def __init__(self,config):
+    # A template of basic initalizer
+    def __basicInit(self,config):
         self.config = {}
-        self.cpCMDs = []
+        self.RE_PAIRs = []
         with open (Path(config)) as f:
             self.config=json.load(f)
 
+    # Basic init
+    def __init__(self,config):
+        self.__basicInit(config)
+
     # Init and set the output copy rule
     def __init__(self,config,JROT='x',IDIA='x',NAME="Unknown",svOp=False):
-        self.config = {}
-        self.cpCMDs = []
-        with open (Path(config)) as f:
-            self.config=json.load(f)
+        self.__basicInit(config)
         self.JROT = JROT
         self.IDIA = IDIA
         self.PROJECT_NAME = NAME
@@ -147,7 +158,7 @@ class GeneralParser:
             # If the variable name start with I then remove it
             if varname[0] == "I": varname = varname[1:]
 
-            self.cpCMDs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
+            self.RE_PAIRs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
 
         # The optional part
         if self.saveOptional:
@@ -164,7 +175,7 @@ class GeneralParser:
                 # If the variable name start with I then remove it
                 if varname[0] == "I": varname = varname[1:]
 
-                self.cpCMDs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
+                self.RE_PAIRs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
 
 
 
@@ -172,6 +183,7 @@ class GeneralParser:
         with open (Path(output),"w+",encoding="utf-8") as f:
             for line in self.config:
                 try:
+                    # Depend on block type, parse the input file
                     if self.config[line]["type"] == "PRT":
                         self.__parPRT(self.config[line],input,f)
                     elif self.config[line]["type"] == "VAL":
