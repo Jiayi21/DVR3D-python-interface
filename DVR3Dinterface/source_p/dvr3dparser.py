@@ -35,6 +35,7 @@ class GeneralParser:
 
         write               Process the input, extract information, write to a job file.
 
+        __searchLink        Search if any file should be linked
         __prtXXX            Different functions for different config block types
         askForFileNameCheck When called, ask user to input missing filename parts
         getFileNamePRT      Pack 3 parts of filename in a [list] and return.
@@ -110,13 +111,45 @@ class GeneralParser:
                         self.__parCUS(self.config[line],input,f)
                     elif self.config[line]["type"] == "OUTPUT_FILES":
                         self.__parOF(self.config[line],input,noAsk)
+                        self.__searchLink(self.config[line],input)
                     else:
                         raise ValueError("Config type not found: {}".format(line))
                 except Exception as e:
                     print("Error parsing {}: {}".format(line,e))
                     raise
 
-    
+    def __searchLink(self,configOF,data):
+        """
+        Search the input data for the filenames that should be linked.
+
+        Arguments:
+        ----------
+            configOF    [dict]  Sub part of config of Output files.
+            data        [dict]  All input data
+        """
+        for key in data:
+            if key[:3] == "LK_":
+                # For example LK_KVEC: HCN_J2D1.KVEC
+                # the varnameLK will be KVEC
+                varnameLK = key[3:]
+
+                if varnameLK in data: # This means user have given new fort number for this file
+                    # data[key] = "HCN_J2D1.KVEC", data[varnameLK] = data["KVEC"] = some int
+                    self.LK_PAIRs.append((data[key], "fort.{}".format(data[varnameLK])))
+
+                elif varnameLK in configOF["fixed"] or varnameLK in configOF["optional"]:
+                    # This means, user didn't given new fort.x number, use default number stored in OUTPUT_FILES of config
+                    fortNum = 0
+                    if varnameLK in configOF["fixed"]: fortNum = configOF["fixed"][varnameLK]
+                    elif varnameLK in configOF["optional"]: fortNum = configOF["optional"][varnameLK]
+                    else: raise RuntimeError("This should not happen, check coding dvr3dparser-GeneralParser-__searchLink.")
+
+                    self.LK_PAIRs.append((data[key],"fort.{}".format(fortNum)))
+
+                else:
+                    # If failed to find the varname in both place, raise
+                    raise KeyError("{} not found while parsing {}:{}".format(varnameLK,key,data[key]))
+
 
     # Parse and print the NAMELIST line
     def __parPRT(self,configsub,data,filestream):    

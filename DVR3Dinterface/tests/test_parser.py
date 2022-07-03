@@ -1,4 +1,5 @@
 from logging import exception
+from ssl import DefaultVerifyPaths
 from tkinter import N
 from typing import Type
 import DVR3Dinterface.source_p.dvr3dparser as parser
@@ -35,6 +36,14 @@ def test_positive_renaming_optional():
                                 ('fort.2', 'TEST_J2D1.EIGS2'),('fort.4', 'TEST_J2D1.VECS2'),\
                                 ('fort.24', 'TEST_J2D1.OUT1'),('fort.25', 'TEST_J2D1.OUT2')]
 
+def test_positive_ExtractLinking():
+    dvrparser = parser.GeneralParser(cpath)
+    with open(Path(tpath+"p_Link.json")) as fin:
+        jsonfile = json.load(fin)
+    dvrparser.write(jsonfile,Path(tpath+"p_Link.job"),noAsk=True)
+    assert dvrparser.LK_PAIRs == [("TestLinkTarget1_default7", "fort.7"),\
+                                ("TestLinkTarget2_default2_given1","fort.1")]
+
 
 def test_IntToFloat():
     dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DJZ.json")
@@ -69,4 +78,11 @@ def test_neg_WrongIntPRT():
     with open (Path(tpath+"n_wrongIntPrt.json")) as fin:
             jsonfile = json.load(fin)
     with raises(TypeError) as exception:
-        dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/n_wrongIntPrt.job"))
+        dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/n_wrongIntPrt.job"),noAsk=True)
+
+def test_neg_PRTnameNotExist():
+    dvrparser = parser.GeneralParser(cpath)
+    with open (Path(tpath+"n_LinkPRTnameWrong.json")) as fin:
+            jsonfile = json.load(fin)
+    with raises(KeyError) as exception:
+        dvrparser.write(jsonfile,Path(tpath+"n_LinkPRTnameWrong.job"),noAsk=True)   
