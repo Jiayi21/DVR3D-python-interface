@@ -12,11 +12,37 @@ def formatCheck(data,formatstr,varname):
         or (formatstr[0] in ['A','a'] and type(data)!=str):
         print("Warning: Output format for {} is {}, given {}".format(varname, formatstr, type(data)))
 
-# This class aims at parsing input file, get required data and "operations" from it.
-# Although the commandline interface parse and parseArun use this class only
-# It is not designed to be used directly, i.e. have no run() method.
-# This can easily be added in the future if required, by collecting code from paseArun.
 class GeneralParser:
+    """
+    Generate job file and extract related information from a Python dict input of data, and a JSON file specifying configs.
+
+    Attributes:
+    -----------
+        config:     [dict]  The loaded json config
+        RE_PAIRs:   [Tuple] Tuples of filenames, for fort.X renaming via python OS lib.
+        LK_PAIRs:   [Tuple] Tuples of filenames, for NAME_JxDx to fort.X linking via python OS lib.
+
+        JROT:       [Auto]  JROT value only for filenames
+        IDIA:       [Auto]  IDIA value only for filenames
+        PROJECT_NAME[Auto]  Project name, only for filenames
+        saveOptional[Bool]  If optional fort.X should be renamed.
+    
+    Methods:
+    --------
+        __basicInit         Common part of different initalization
+        __init__            Two types, default and init with given JROT,IDIA,PROJECT_NAME
+        __PrtToStr          Helps to print Boolean type to job file in format of .True.
+
+        write               Process the input, extract information, write to a job file.
+
+        __prtXXX            Different functions for different config block types
+        askForFileNameCheck If called from elsewhere, ask user to input missing filename parts
+        getFileNamePRT      Pack 3 parts of filename in a [list] and return.
+
+    Although the commandline interface parse and parseArun use this class only
+    It is not designed to be used directly, i.e. have no run() method.
+    This can easily be added in the future if required, by collecting code from paseArun.
+    """
     # The loaded json config file
     config = {}
     # In early stage this is the console commands of copying files named "cpCMDs"
@@ -58,9 +84,32 @@ class GeneralParser:
         else:
             name += "=.false., "
         return name
+
+    def write(self,input,output,noAsk = False):          
+        with open (Path(output),"w+",encoding="utf-8") as f:
+            for line in self.config:
+                try:
+                    # Depend on block type, parse the input file
+                    if self.config[line]["type"] == "PRT":
+                        self.__parPRT(self.config[line],input,f)
+                    elif self.config[line]["type"] == "VAL":
+                        self.__parVAL(self.config[line],input,f)
+                    elif self.config[line]["type"] == "TITLE":
+                        self.__parTITLE(self.config[line],input,f)
+                    elif self.config[line]["type"] == "CUS":
+                        self.__parCUS(self.config[line],input,f)
+                    elif self.config[line]["type"] == "OUTPUT_FILES":
+                        self.__parOF(self.config[line],input,noAsk)
+                    else:
+                        raise ValueError("Config type not found: {}".format(line))
+                except Exception as e:
+                    print("Error parsing {}: {}".format(line,e))
+                    raise
+
     
+
     # Parse and print the NAMELIST line
-    def __parPRT(self,configsub,data,filestream):
+    def __parPRT(self,configsub,data,filestream):    
         filestream.write(" {} ".format(configsub["head"]))
         # Check if Int type keylist is present in config
         if "keylist_I" in configsub:
@@ -177,29 +226,6 @@ class GeneralParser:
 
                 self.RE_PAIRs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
 
-
-
-    def write(self,input,output,noAsk = False):
-        with open (Path(output),"w+",encoding="utf-8") as f:
-            for line in self.config:
-                try:
-                    # Depend on block type, parse the input file
-                    if self.config[line]["type"] == "PRT":
-                        self.__parPRT(self.config[line],input,f)
-                    elif self.config[line]["type"] == "VAL":
-                        self.__parVAL(self.config[line],input,f)
-                    elif self.config[line]["type"] == "TITLE":
-                        self.__parTITLE(self.config[line],input,f)
-                    elif self.config[line]["type"] == "CUS":
-                        self.__parCUS(self.config[line],input,f)
-                    elif self.config[line]["type"] == "OUTPUT_FILES":
-                        self.__parOF(self.config[line],input,noAsk)
-                    else:
-                        raise ValueError("Config type not found: {}".format(line))
-                except Exception as e:
-                    print("Error parsing {}: {}".format(line,e))
-                    raise
-
     # If one of the three part of file name is missing, ask user to input one
     def askForFileNameCheck(self):
         if self.PROJECT_NAME == "Unknown":
@@ -234,7 +260,7 @@ class GeneralParser:
             self.IDIA = keyin
     
     # Get Projectname, JROT, IDIA for filenaming
-    def getFileNamePRT(self):
+    def getFileNamePRT(self):  
         return [self.PROJECT_NAME,self.JROT,self.IDIA]
 
 def txtToJson(filepath):

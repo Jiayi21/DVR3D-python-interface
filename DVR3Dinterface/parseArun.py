@@ -64,7 +64,7 @@ if __name__ == '__main__':
         os.remove("output/temp.job")
 
     # Copy and rename some fort files
-    for cpCMD in dvrparser.cpCMDs:
+    for cpCMD in dvrparser.RE_PAIRs:
         rCode = os.system(cpCMD)
         if rCode !=0:
             print("Renaming failed: {}".format(cpCMD))
