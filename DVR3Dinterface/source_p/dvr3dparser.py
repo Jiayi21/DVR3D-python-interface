@@ -36,7 +36,7 @@ class GeneralParser:
         write               Process the input, extract information, write to a job file.
 
         __prtXXX            Different functions for different config block types
-        askForFileNameCheck If called from elsewhere, ask user to input missing filename parts
+        askForFileNameCheck When called, ask user to input missing filename parts
         getFileNamePRT      Pack 3 parts of filename in a [list] and return.
 
     Although the commandline interface parse and parseArun use this class only
@@ -63,6 +63,7 @@ class GeneralParser:
     def __basicInit(self,config):
         self.config = {}
         self.RE_PAIRs = []
+        self.LK_PAIRs = []
         with open (Path(config)) as f:
             self.config=json.load(f)
 
@@ -85,7 +86,16 @@ class GeneralParser:
             name += "=.false., "
         return name
 
-    def write(self,input,output,noAsk = False):          
+    def write(self,input,output,noAsk = False):
+        """
+        Take input and config, extract required information, write Fortran's job file.
+
+        Argument:
+        ---------
+            input   [dict]  Input data.
+            output  [str]   Path to output(job) file
+            noAsk   [Bool]  If any of 3 parts of filename is missing, ask user to input or not.
+        """              
         with open (Path(output),"w+",encoding="utf-8") as f:
             for line in self.config:
                 try:
@@ -110,6 +120,16 @@ class GeneralParser:
 
     # Parse and print the NAMELIST line
     def __parPRT(self,configsub,data,filestream):    
+        """
+        Parse for config block type "PRT"
+        Other __partXXX also follow this format
+
+        Arguments:
+        ----------
+            configsub   [dict]  A sub part of all config. Only for the current "block"
+            data        [dict]  All input data
+            filestream  [obj]   Python IO stream to the output job file
+        """
         filestream.write(" {} ".format(configsub["head"]))
         # Check if Int type keylist is present in config
         if "keylist_I" in configsub:

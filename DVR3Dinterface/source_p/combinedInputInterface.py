@@ -11,6 +11,24 @@ except:
 import os
 
 class CombinedInputInterface:
+    """
+    Main interface to process Batch data (multiple steps) using single step parsing class
+
+    Attributes:
+    -----------
+        commands        [[str]]     A List of List of commands. Includes Fortran running and other commandline instructions (such as cp)
+        commands_grp    [str]       Cache a group of commands before put into "commands"
+        RE_PAIRs        [[Tuple]]   A list of List of Tuples of filenames to be renamed from & to
+        RE_PAIRs_grp    [Tuple]     Cached group
+        JROT,IDIA,PROJECT_NAME      Only affect renamed filename
+        saveOptional    [Bool]      If optional fort.X should be renamed and saved
+
+    Methods:
+    --------
+        __init__        Actually not Initializing, but do all the parsing and save all commands to be run later.
+        printCommands   Print the Attribute "commands" in a better layout, usually for debug using
+        run             Run the saved commands.
+    """
     # Record the commandline to run
     commands = [] # A List of List of commands. This two-level structure allows execute all commands group by group
     commands_grp = [] # cache a number of blocks before been put into commands
@@ -25,6 +43,15 @@ class CombinedInputInterface:
     saveOptional = False
 
     def __init__(self,inputpath,clearcmds=True,saveOptional = False):
+        """
+        Do all the parsing. Prepare the instructions or renaming settings to run later
+
+        Arguments:
+        ----------
+            inputpath   [str]       Path to batch input file
+            clearcmds   [bool]      Result of lacking "initalizing", reset the class's attributes
+            saveOptional[bool]      Save optional fort.X files (rename them) or not.
+        """
         self.saveOptional = saveOptional
 
         tempdir ="input/temp/"
@@ -131,6 +158,14 @@ class CombinedInputInterface:
             print("=========")
 
     def run(self, clearTemp = True, clearAll = False):
+        """
+        Run the prepaired commands, or run via OS lib.
+
+        Arguments:
+        ----------
+            clearTemp   [bool]  If the temp job file and txt,json segmented from the combined input file should be deleted
+            clearAll    [bool]  If the rest of fort.X files should be deleted after some of them has been renamed (saved)
+        """
         # Run group by group
         if len(self.RE_PAIRs) != len(self.commands):
             print("Warning: Renaming and Executing commands have different number of groups")
