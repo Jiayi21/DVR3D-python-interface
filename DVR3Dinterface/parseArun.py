@@ -54,10 +54,18 @@ if __name__ == '__main__':
     if (args.make):
         os.system("make "+args.Fsource)
 
+    # Linking
+    for lkpair in dvrparser.LK_PAIRs:
+        os.link(lkpair[0],lkpair[1])
+
     # Run Fortran
     returncode = os.system("./{} <output/temp.job> {}".format(args.Fsource, outfilename))
     if returncode !=0:
         raise RuntimeError("Failure in Fortran running, code: {}".format(returncode))
+
+    # Unlink
+    for lkpair in dvrparser.LK_PAIRs:
+        os.unlink(lkpair[1])
 
     # Remove intermediate job file or not
     if not args.job:
