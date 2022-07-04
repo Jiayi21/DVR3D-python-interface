@@ -20,6 +20,8 @@ class CombinedInputInterface:
         commands_grp    [str]       Cache a group of commands before put into "commands"
         RE_PAIRs        [[Tuple]]   A list of List of Tuples of filenames to be renamed from & to
         RE_PAIRs_grp    [Tuple]     Cached group
+        LK_PAIRs        [[Tuple]]   A list of List of Tuples of filenames to be Linked from & to
+        LK_PAIRs_grp    [Tuple]     Cached group
         JROT,IDIA,PROJECT_NAME      Only affect renamed filename
         saveOptional    [Bool]      If optional fort.X should be renamed and saved
 
@@ -32,9 +34,12 @@ class CombinedInputInterface:
     # Record the commandline to run
     commands = [] # A List of List of commands. This two-level structure allows execute all commands group by group
     commands_grp = [] # cache a number of blocks before been put into commands
-    # copy commands for the output fort.X files
+    # renaming pairs for the output fort.X files
     RE_PAIRs = []
     RE_PAIRs_grp = []
+    # link pairs
+    LK_PAIRs = []
+    LK_PAIRs_grp = []
     # Three parameters affecting output filename
     JROT = "x"
     IDIA = "x"
@@ -62,6 +67,10 @@ class CombinedInputInterface:
         if clearcmds:
             self.commands=[]
             self.commands_grp = []
+            self.LK_PAIRs = []
+            self.LK_PAIRs_grp = []
+            self.RE_PAIRs = []
+            self.RE_PAIRs_grp = []
 
         # Open the file read every line into a vector
         lines = open(Path(inputpath)).read().splitlines()
@@ -120,6 +129,7 @@ class CombinedInputInterface:
 
                 # gather commands to rename required files, already generated in dvrparser
                 self.RE_PAIRs_grp.extend(dvrparser.RE_PAIRs) 
+                self.LK_PAIRs_grp.extend(dvrparser.LK_PAIRs)
 
                 # Optional argument:
                 outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
@@ -143,7 +153,8 @@ class CombinedInputInterface:
                 self.commands_grp = []
                 self.RE_PAIRs.append(self.RE_PAIRs_grp)
                 self.RE_PAIRs_grp = []
-
+                self.LK_PAIRs.append(self.LK_PAIRs_grp)
+                self.LK_PAIRs_grp = []
             # If not &&Fortran, then it is a command to directly run
             else:
                 self.commands_grp.append(line[2:])
@@ -165,21 +176,50 @@ class CombinedInputInterface:
         ----------
             clearTemp   [bool]  If the temp job file and txt,json segmented from the combined input file should be deleted
             clearAll    [bool]  If the rest of fort.X files should be deleted after some of them has been renamed (saved)
+
+        Commands will be run Group by Group, each group is the jobs before each "Execute" in input file
+        Running process:
+            1. Link files
+            2. Execute Fortran and Other (&& + any command in input) command
+            3. Unlink files
+            4. Renaming fort.x files
+            5. Delete all fort.x files [optional]
         """
-        # Run group by group
+
+        # This is a checking step, ensure number of groups are same. If coding correct it should be.
         if len(self.RE_PAIRs) != len(self.commands):
             print("Warning: Renaming and Executing commands have different number of groups")
+        if len(self.LK_PAIRs) != len(self.commands):
+            print("Warning: Linking and Executing commands have different number of groups")
 
         # Loop groups
         for i in range(len(self.commands)):
+            
+            # Do LINK operation before start running this group's command
+            for lkpair in self.LK_PAIRs[i]:
+                try:
+                    os.link(lkpair[0],lkpair[1])
+                except Exception:
+                    # If linking failed, should stop running because either wrong file or no file will be given to Fortran
+                    print("Failed linking: {}".format(lkpair))
+                    raise
+
             # Loop instructions in group
             for cmd in self.commands[i]:
                 code = os.system(cmd)
                 if code != 0:
                     raise RuntimeError("Error code {} on running: {}".format(code,cmd))
+
+            # Unlink
+            for lkpair in self.LK_PAIRs[i]:
+                try:
+                    os.unlink(lkpair[1])
+                except Exception:
+                    print("Failed Un-Linking: {}".format(lkpair))
+                    raise
+
             # Remove duplicated renaming commands     
             self.RE_PAIRs[i] = list(set(self.RE_PAIRs[i]))
-            
             for cmd in self.RE_PAIRs[i]:
                 try:
                     os.rename(cmd[0],cmd[1])
