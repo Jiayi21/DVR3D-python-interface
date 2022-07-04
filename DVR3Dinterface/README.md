@@ -76,6 +76,8 @@ Parse the argument to Fortran job and run Fortran code.
 
 Usage can be found by running with -h argument.
 
+While input file format can be found in readme under input folder [here](input/)
+
 example:
 ~~~~
 python parseBatchRun.py input/combined.txt -c
@@ -97,7 +99,7 @@ It requires three parts of information:
 
 These variables could be provided within either "Fortran" block of combined input file, or anywhere in a single input file.
 
-Also, they can be manually given or overwrite by commandline arguments while running parseArun and parseBatch run.
+Also, they can be manually given or overwrite by commandline arguments while running parseArun. For batch run, these should only be given in combined input file. See README under input folder.
 ~~~~
   --clearAll     If set, delete all fort.x file
   --saveStream   If set, save "optional" stream fort.x files
