@@ -84,6 +84,15 @@ Value can be given in format that acceptable by json loader. Include scientific 
 
 However, note that Float in python is double precision by default, and value like 1.0d-40 should be written as 1.0e-40. "d" mark cannot be used.
 
+### Leading Zeros
+Please be aware JSON having some problem reading leading zeros. If there is something like:
+* NV1:08
+* IBASE1:00
+
+Write them as:
+* NV1:8
+* IBASE1:0
+
 ## Comment
 Comment can be used within input files, a line started by "!" will be comment and will not be read as data.
 

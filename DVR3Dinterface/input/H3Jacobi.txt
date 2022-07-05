@@ -1,0 +1,158 @@
+&&Fortran DVR3DJZ ./dvr.out
+PROJECT_NAME:"H3Jacobi"
+!
+ZEMBED:false
+ZTRAN:true
+ZPFUN:true
+!
+NCOORD:3
+!
+NPNT2:21
+JROT:0
+NEVAL:400
+NALF:36
+MAX2D:1000
+MAX3D:2000
+IDIA:2
+KMIN:1
+NPNT1:20
+IPAR:1
+!
+TITLE:" H3+: J=0"
+!
+XMASS(1):1.007537200
+XMASS(2):1.007537200
+XMASS(3):1.007537200
+XMASSR(1):1.007276470
+XMASSR(2):1.007276470
+XMASSR(3):1.007276470
+!
+EMAX1:66000.000
+EMAX2:45000.000000
+!
+RE1:2.1000
+DISS1:0.10000
+WE1:0.0118
+RE2:1.7100
+DISS2:0.2600
+WE2:0.0090
+!
+EZERO:4362.208278
+
+&&Execute
+
+&&Fortran DVR3DJZ ./dvr.out\
+TITLE:" H3+: J=1"
+!
+ZEMBED:false
+ZTRAN:true
+ZPFUN:true
+!
+NCOORD:3
+!
+NPNT2:21
+JROT:1
+NEVAL:400
+NALF:36
+MAX2D:1000
+MAX3D:2000
+IDIA:2
+KMIN:1
+NPNT1:20
+IPAR:1
+!
+XMASS(1):1.007537200
+XMASS(2):1.007537200
+XMASS(3):1.007537200
+XMASSR(1):1.007537200
+XMASSR(2):1.007537200
+XMASSR(3):1.007537200
+!
+EMAX1:66000.000
+EMAX2:45000.000000
+!
+RE1:2.1000
+DISS1:0.10000
+WE1:0.0118
+RE2:1.7100
+DISS2:0.2600
+WE2:0.0090
+
+
+&&Execute
+
+
+! Previously have command cp fort26 xxxxxx
+! This work now by link, 26 by default is IWAVE
+
+
+&&Fortran ROTLEV3 ./rot.out
+!
+TITLE:"  Rotation for H3+ J=1"
+!
+LK_IWAVE:"H3Jacobi_J1D2.WAVE"
+!
+TOLER:"1.0d-4"
+ZTRAN:true
+ZDCORE:true
+ZPFUN:true
+!
+NVIB:400
+NEVAL:40
+KMIN:2
+IBASS:700
+!
+EZERO:4362.208278
+
+&&Execute
+
+!cp  fort26_h3p_j0_odd fort.11  
+!cp  fort8_h3p_j1_even fort.12  
+!    H3Jacobi_J0D2.WAVE  -> IKET
+!    H3Jacobi_J1D2.KVEC  -> IBRA
+
+&&Fortran DIPOLE3 ./dip.out
+!
+TITLE:"  Dipole Transitions for H3+"
+!
+LK_IKET:"H3Jacobi_J0D2.WAVE"
+LK_IBRA:"H3Jacobi_J1D2.KVEC"
+!
+ZPRINT:true
+ZSTART:true
+!
+NPOT:80
+NV1:8
+NV2:8
+IBASE1:0
+IBASE2:0
+!
+EZERO:4361.60387517
+
+
+&&Fortran SPECTRA ./spc.out
+!
+TITLE:"Spectra for dipole moment of h3+, T=1400k"
+!
+ZSORT:true
+ZPFUN:false
+GZ:"4362.208278"
+!
+GE:0.0
+GO:2.666667
+!
+TEMP:1400.0
+XMIN:0.01000
+WMIN:1.0
+WMAX:18000.0
+DWL:1.0
+Q:37.6224
+!
+ZEMIT:false
+ZPLOT:true
+ZFREQ:true
+ZENE:true
+ZPROF:false
+PRTHR:"0.0d0"
+
+&&Execute

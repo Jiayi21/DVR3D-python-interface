@@ -85,7 +85,7 @@ class CombinedInputInterface:
             # Ignore empty line
             if line=='':
                 pass
-            elif line[:2] != "&&":
+            elif line[:2] != "&&" and line[:1] !="!":
                 print("Warning: This line does not belong to any block: \n{}".format(line))
             # Check if is a new Fortran block
             elif line[2:9]=="Fortran":
