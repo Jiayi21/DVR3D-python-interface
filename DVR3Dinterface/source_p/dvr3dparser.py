@@ -292,7 +292,7 @@ class GeneralParser:
             raise ValueError("Related-Max_Length array failed to find maximum length")
         if type(data[configsub["key"]]) != list:
             raise TypeError("Related-Max_Length must be given by list, found {}".format(type(data[configsub["key"]])))
-        if len(data[configsub["key"]]) > configsub['maxlength']:
+        if len(data[configsub["key"]]) > data[configsub['maxlength']]:
             print("Warning: Related-Maximum-Length-Array given size greater than expected: {}".format(configsub["key"]))
 
         # Write

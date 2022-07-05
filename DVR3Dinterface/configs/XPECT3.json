@@ -32,5 +32,18 @@
         "maxlength":"NPROPIN",
         "format":"I5",
         "key":"IPROP"
+    },
+    "OUTPUT_FILES":{
+        "type":"OUTPUT_FILES",
+        "fixed":{
+            "ITRA":12,
+            "ITRA0":28
+        },
+        "optional":{
+          
+        },
+        "input":{
+            "IKET":11
+        }
     }
 }

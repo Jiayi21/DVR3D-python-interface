@@ -44,6 +44,12 @@ def test_positive_ExtractLinking():
     assert dvrparser.LK_PAIRs == [("TestLinkTarget1_default7", "fort.7"),\
                                 ("TestLinkTarget2_default2_given1","fort.1")]
 
+def test_positive_XPECT_Array():
+    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/XPECT3.json")
+    with open(Path(tpath+"p_XPECT.json")) as fin:
+        jsonfile = json.load(fin)
+    dvrparser.write(jsonfile,Path(tpath+"p_XPECT.job"),noAsk=True)    
+    assert filecmp.cmp(tpath+"p_XPECT_pos.job", tpath+"p_XPECT.job")
 
 def test_IntToFloat():
     dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DJZ.json")

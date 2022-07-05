@@ -1,0 +1,10 @@
+{
+    "ZFORM":true,
+    "ZSTART":true,
+    "ZFIT":true,
+    "TITLE":"Expectation value for water, J=0, properties=4",
+    "LPOT":38,
+    "NPROPIN":4,
+    "NPRT":29,
+    "IPROP":[1,2,3,4]
+}
