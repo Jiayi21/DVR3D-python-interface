@@ -103,11 +103,13 @@ As shown in the piece of config above, it does not have "format", but adding a f
     "opitonal":{
         "IWAVE":26,
         "JVEC":3
-    }
+    },
+    "input":{}
 }
 ~~~~
 This is an example only. Beside the "type", it requires (Can be empty by using \{\}, but must be a key there)
 * fixed: These fort.X files will always be renamed
 * optional: These files will only be renamed if save optional flag is set in the commandline.
+* input: Used to store the default fort.x value, not an output and will not be renamed. Used in DIPOLE3
 
 This block also provide the default filename of fort.X of these argument(files). If the argument with the same name appears in other lines (ie the filename has been changed with new number after fort.), the changed one will be used.
