@@ -1,4 +1,4 @@
- &PRT iket=8, ibra=9,  / 
-HCN DIPOLE MOMENT J 2-2 f-e parity
-   60   30   20
-     3481.5055208400
+ &PRT toler=1.0d-4, ztran=.true., zpfun=.true., zdcore=.true.,  / 
+  400   40    2  700
+  Rotation for H3+ J=1
+     4362.2082780000

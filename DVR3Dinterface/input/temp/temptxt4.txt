@@ -1,27 +1,18 @@
-ZSORT:true
-ZOUT:false
-ZPFUN:false
-ZPSEG:true
-GZ:"3481.50"
-SMIN:"1.0d-40"
-EMIN:"0.0d0"
-EMAX:"1.8d4"
-WSMAX:"9000.0d0"
-WSMIN:"0.0d0"
-TITLE:"Spectra for dipole moment of HCN"
-GE:1.0
-GO:1.0
-TEMP:2000.0
-XMIN:1e-40
-WMIN:0.0
-WMAX:18000.0
-DWL:1.0
-Q:20285.9
-ZROT:true
-ZLIST:true
-ZEMIT:false
-EMAX1:"60000.0d6"
-EMAX2:"60000.0d6"
-ZPROF:true
-ZPLOT:true
+!
+TITLE:"  Dipole Transitions for H3+"
+!
+LK_IKET:"H3Jacobi_J0D2.WAVE"
+LK_IBRA:"H3Jacobi_J1D2.KVEC"
+!
+ZPRINT:true
+ZSTART:true
+!
+NPOT:80
+NV1:8
+NV2:8
+IBASE1:0
+IBASE2:0
+!
+EZERO:4361.60387517
+
 

@@ -3,3 +3,5 @@ __pycache__/
 DVR3Dinterface/ipynb_demo/
 
 DVR3Dinterface/tests/testtemp/temp*
+
+DVR3Dinterface/input/temp/
