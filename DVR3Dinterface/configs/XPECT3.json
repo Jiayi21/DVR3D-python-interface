@@ -1,0 +1,36 @@
+{
+    "LINE1":{
+        "type":"PRT",
+        "head":"&PRT",
+        "keylist_I": [
+            "IKET",
+            "ITRA",
+            "ITRA0"
+        ],
+        "keylist_L": [
+            "ZPRINT",
+            "ZTRA",
+            "ZFORM",
+            "ZFIT",
+            "ZSTART"
+        ]
+    },
+    "LINE2":{
+        "type":"TITLE",
+        "length": 72
+    },
+    "LINE3":{
+        "type": "VAL",
+        "format": "I5",
+        "minval": 1,
+        "keylist": [
+            "LPOT","NPROPIN","NPRT","NV1"
+        ]        
+    },
+    "LINE4":{
+        "type":"RMLARY",
+        "maxlength":"NPROPIN",
+        "format":"I5",
+        "key":"IPROP"
+    }
+}

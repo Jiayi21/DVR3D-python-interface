@@ -109,6 +109,8 @@ class GeneralParser:
                         self.__parTITLE(self.config[line],input,f)
                     elif self.config[line]["type"] == "CUS":
                         self.__parCUS(self.config[line],input,f)
+                    elif self.config[line]["type"] == "RMLARY":
+                        self.__parRMLARY(self.config[line],input,f)
                     elif self.config[line]["type"] == "OUTPUT_FILES":
                         self.__parOF(self.config[line],input,noAsk)
                         self.__searchLink(self.config[line],input)
@@ -280,6 +282,24 @@ class GeneralParser:
                 if varname[0] == "I": varname = varname[1:]
 
                 self.RE_PAIRs.append(("fort.{}".format(fileNum), "{}.{}".format(opfilename,varname)))
+        
+    def __parRMLARY(self,configsub,data,filestream):
+        # Related-Maximum-Length-Array
+        # Firstly used for XPECT3, Line 4
+
+        # Verify input
+        if configsub['maxlength'] not in data:
+            raise ValueError("Related-Max_Length array failed to find maximum length")
+        if type(data[configsub["key"]]) != list:
+            raise TypeError("Related-Max_Length must be given by list, found {}".format(type(data[configsub["key"]])))
+        if len(data[configsub["key"]]) > configsub['maxlength']:
+            print("Warning: Related-Maximum-Length-Array given size greater than expected: {}".format(configsub["key"]))
+
+        # Write
+        writer = ffW(configsub["format"])
+        for value in data[configsub["key"]]:
+            formatCheck(value,configsub["format"],configsub["key"])
+            filestream.write(writer.write([value]))
 
     # If one of the three part of file name is missing, ask user to input one
     def askForFileNameCheck(self):
