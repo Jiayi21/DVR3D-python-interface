@@ -1,6 +1,7 @@
 &&Fortran DVR3DJZ ./dvr.out
 PROJECT_NAME:"H3Jacobi"
 !
+ZR2R1:false
 ZEMBED:false
 ZTRAN:true
 ZPFUN:true
@@ -41,9 +42,10 @@ EZERO:4362.208278
 
 &&Execute
 
-&&Fortran DVR3DJZ ./dvr.out\
+&&Fortran DVR3DJZ ./dvr.out
 TITLE:" H3+: J=1"
 !
+ZR2R1:false
 ZEMBED:false
 ZTRAN:true
 ZPFUN:true
