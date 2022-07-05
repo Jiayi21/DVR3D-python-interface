@@ -83,6 +83,7 @@
     "fixed":{},
     "optional":{
       "ISPE":15
-    }
+    },
+    "input":{}
   }
 }

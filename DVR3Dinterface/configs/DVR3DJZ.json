@@ -155,6 +155,7 @@
       "IVINT":17,
       "IBAND":15,
       "INTVEC":16
-    }
+    },
+    "input":{}
   }
 }

@@ -137,11 +137,13 @@ class GeneralParser:
                     # data[key] = "HCN_J2D1.KVEC", data[varnameLK] = data["KVEC"] = some int
                     self.LK_PAIRs.append((data[key], "fort.{}".format(data[varnameLK])))
 
-                elif varnameLK in configOF["fixed"] or varnameLK in configOF["optional"]:
+                elif varnameLK in configOF["fixed"] or varnameLK in configOF["optional"] or varnameLK in configOF["input"]:
                     # This means, user didn't given new fort.x number, use default number stored in OUTPUT_FILES of config
                     fortNum = 0
                     if varnameLK in configOF["fixed"]: fortNum = configOF["fixed"][varnameLK]
                     elif varnameLK in configOF["optional"]: fortNum = configOF["optional"][varnameLK]
+                    elif varnameLK in configOF["input"]: fortNum = configOF["input"][varnameLK]
+
                     else: raise RuntimeError("This should not happen, check coding dvr3dparser-GeneralParser-__searchLink.")
 
                     self.LK_PAIRs.append((data[key],"fort.{}".format(fortNum)))

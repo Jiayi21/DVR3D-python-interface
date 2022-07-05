@@ -42,6 +42,10 @@
         "fixed":{
             "ITRA":13
         },
-        "optional":{}
+        "optional":{},
+        "input":{
+            "IKET":11,
+            "IBRA":12
+        }
     }
 }
