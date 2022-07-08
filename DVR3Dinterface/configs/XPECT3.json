@@ -30,6 +30,7 @@
     "LINE4":{
         "type":"RMLARY",
         "maxlength":"NPROPIN",
+        "caplength":20,
         "format":"I5",
         "key":"IPROP"
     },

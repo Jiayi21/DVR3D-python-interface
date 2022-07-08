@@ -1,6 +1,7 @@
 from doctest import testmod
 import json
 from pathlib import Path
+from os.path import exists
 testmode = False
 try:
     from source_p import dvr3dparser as dp
@@ -197,6 +198,9 @@ class CombinedInputInterface:
             
             # Do LINK operation before start running this group's command
             for lkpair in self.LK_PAIRs[i]:
+                # Check if linking target already exist
+                if exists(lkpair[1]):
+                    print("Warning: File already exist while linking {}".format(lkpair))
                 try:
                     os.link(lkpair[0],lkpair[1])
                 except Exception:

@@ -294,6 +294,10 @@ class GeneralParser:
             raise TypeError("Related-Max_Length must be given by list, found {}".format(type(data[configsub["key"]])))
         if len(data[configsub["key"]]) > data[configsub['maxlength']]:
             print("Warning: Related-Maximum-Length-Array given size greater than expected: {}".format(configsub["key"]))
+        if "caplength" in configsub:
+            if len(data[configsub["key"]]) > configsub['caplength']:
+                print("Warning: Related-Maximum-Length-Array given size greater than limit, will be capped")
+                data[configsub["key"]] = data[configsub["key"]][:configsub['caplength']]
 
         # Write
         writer = ffW(configsub["format"])
