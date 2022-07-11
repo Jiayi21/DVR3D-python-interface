@@ -1,0 +1,203 @@
+&&Fortran DVR3DJZ ./dvr.out
+!
+PROJECT_NAME:"WATER"
+!
+TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
+!
+ZROT:true
+ZLIN:true
+ZTRAN:true
+ZPFUN:true
+!
+NCOORD:3
+!
+NPNT2:21
+JROT:0
+NEVAL:25
+NALF:40
+MAX2D:500
+MAX3D:500
+IDIA:-2
+KMIN:2
+NPNT1:0
+IPAR:0
+!
+XMASS(1):1.007825
+XMASS(2):1.007825
+XMASS(3):15.990726
+XMASSR(1):1.007825
+XMASSR(2):1.007825
+XMASSR(3):15.990726
+!
+RE1:2.55
+DISS1:0.25
+WE1:0.007
+RE2:2.55
+DISS2:0.25
+WE2:0.007
+
+&&cp fort.26 fort.11
+
+&&Fortran XPECT3 ./xpect.out
+!
+TITLE:"Expectation value for water, J=0, properties=4"
+!
+ZFORM:true
+ZSTART:true
+ZFIT:true
+!
+LPOT:38
+NPROPIN:4
+NPRT:29
+IPROP:[1,2,3,4]
+
+&&Fortran DVR3DJZ ./dvr.out outname=result_WATER_even.DVR3DJZ
+!
+TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
+!
+ZROT:true
+ZLIN:true
+ZTRAN:true
+ZPFUN:true
+!
+NCOORD:3
+!
+NPNT2:21
+JROT:2
+NEVAL:150
+NALF:40
+MAX2D:500
+MAX3D:500
+IDIA:-2
+KMIN:2
+NPNT1:0
+IPAR:0
+!
+XMASS(1):1.007825
+XMASS(2):1.007825
+XMASS(3):15.990726
+XMASSR(1):1.007825
+XMASSR(2):1.007825
+XMASSR(3):15.990726
+!
+RE1:2.55
+DISS1:0.25
+WE1:0.007
+RE2:2.55
+DISS2:0.25
+WE2:0.007
+
+&&cp fort.26 26_even_t
+
+&&Fortran DVR3DJZ ./dvr.out outname=result_WATER_odd.DVR3DJZ
+!
+TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
+!
+ZROT:true
+ZLIN:true
+ZTRAN:true
+ZPFUN:true
+!
+NCOORD:3
+!
+NPNT2:21
+JROT:2
+NEVAL:150
+NALF:40
+MAX2D:500
+MAX3D:500
+IDIA:-2
+KMIN:2
+NPNT1:0
+IPAR:1
+!
+XMASS(1):1.007825
+XMASS(2):1.007825
+XMASS(3):15.990726
+XMASSR(1):1.007825
+XMASSR(2):1.007825
+XMASSR(3):15.990726
+!
+RE1:2.55
+DISS1:0.25
+WE1:0.007
+RE2:2.55
+DISS2:0.25
+WE2:0.007
+
+&&cp fort.26 26_odd_t
+&&cp -f 26_even_t fort.26
+&&cp -f 26_even_t fort.4
+
+&&Fortran ROTLEV3 ./rot.out outname=result_WATER_even.ROTLEV3B
+!
+TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
+!
+TOLER:"1.0d-4"
+ZPFUN:true
+ZDCORE:true
+ZTRAN:true
+!
+NVIB:150
+NEVAL:25
+KMIN:2
+IBASS:0
+NEVAL2:0
+ZPNT:0
+!
+EZERO:5415.747394 
+
+&&cp fort.8 fort-e.8 
+&&cp fort.9 fort-e.9  
+&&cp -f 26_odd_t fort.26
+&&cp -f 26_odd_t fort.4 
+
+&&Fortran ROTLEV3 ./rot.out outname=result_WATER_odd.ROTLEV3B
+!
+TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
+!
+TOLER:"1.0d-4"
+ZPFUN:true
+ZDCORE:true
+ZTRAN:true
+!
+NVIB:150
+NEVAL:25
+KMIN:2
+IBASS:0
+NEVAL2:0
+ZPNT:0
+!
+EZERO:5415.747394 
+
+&&cp fort.8 fort-o.8 
+&&cp fort.9 fort-o.9  
+
+&&Fortran XPECT3 ./xpect.out outname=result_WATER.XPECT2
+!
+TITLE:"Expectation value for water, J=2, properties=4"
+!
+ZFORM:true
+ZSTART:true
+ZFIT:true
+!
+LPOT:40
+NPROPIN:4
+NPRT:29
+!
+IPROP:[1,2,3,4]
+
+&&cp fort-e.8 fort.11
+&&cp fort-o.9 fort.12
+
+&&Fortran DIPOLE3 ./dip.out
+!
+TITLE:"H20 DIPOLE MOMENT CALCULATIONS"
+!
+NPOT:60
+NV1:10
+NV2:10
+!
+EZERO:5415.747394
+
+&&Execute

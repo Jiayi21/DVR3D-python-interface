@@ -1,0 +1,72 @@
+{
+    "LINE1": {
+        "type": "PRT",
+        "head": "&PRT",
+        "keylist_I":[
+            "IWAVE",
+            "IVEC",
+            "JVEC",
+            "JVEC2",
+            "KVEC",
+            "KVEC2",
+            "ISCR",
+            "JSCR",
+            "IRES",
+            "ILEV"
+        ],
+        "keylist_A": [
+            "TOLER",
+            "THRESH"
+        ],
+        "keylist_L": [
+            "ZPVEC",
+            "ZPHAM",
+            "ZPTRA",
+            "ZTRAN",
+            "ZVEC",
+            "ZPFUN",
+            "ZDIAG",
+            "ZDCORE"
+        ]
+    },
+    "LINE2": {
+        "type": "VAL",
+        "format": "I5",
+        "minval": 1,
+        "keylist": [
+            "NVIB",
+            "NEVAL",
+            "KMIN",
+            "IBASS",
+            "NEVAL2",
+            "NPNT"
+        ]
+    },
+    "LINE3": {
+        "type": "TITLE",
+        "length": 72
+    },
+    "LINE4": {
+        "type": "CUS",
+        "minval": 1,
+        "keylist": {
+            "EZERO": "F20.10"
+        }
+    },
+    "OUTPUT_FILES":{
+        "type":"OUTPUT_FILES",
+        "fixed":{
+            "KVEC":8,
+            "KVEC2":9,
+            "ILEV":14
+        },
+        "optional":{
+            "IWAVE":26,
+            "JVEC":3,
+            "JVEC2":2,
+            "ISCR":1,
+            "JSCR":7
+        },
+        "input":{}
+    }
+}
