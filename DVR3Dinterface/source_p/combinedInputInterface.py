@@ -2,6 +2,7 @@ from doctest import testmod
 import json
 from pathlib import Path
 from os.path import exists
+from shutil import ExecError
 testmode = False
 try:
     from source_p import dvr3dparser as dp
@@ -31,6 +32,7 @@ class CombinedInputInterface:
         __init__        Actually not Initializing, but do all the parsing and save all commands to be run later.
         printCommands   Print the Attribute "commands" in a better layout, usually for debug using
         run             Run the saved commands.
+        __checkCommands Check if there is something to run, or maybe user fogot to add &&Execute
     """
     # Record the commandline to run
     commands = [] # A List of List of commands. This two-level structure allows execute all commands group by group
@@ -83,83 +85,87 @@ class CombinedInputInterface:
         while (linecounter < len(lines)):
             line = lines[linecounter]
 
-            # Ignore empty line or comment line
-            if line=='' or line[0]=='!':
-                pass
-            elif line[:2] != "&&" and line[0] !="!":
-                print("Warning: This line does not belong to any block: \n{}".format(line))
-            # Check if is a new Fortran block
-            elif line[2:9]=="Fortran":
-                taskcounter+=1
-                sepLine = line[10:].split(" ")
+            try:
+                # Ignore empty line or comment line
+                if line=='' or line[0]=='!':
+                    pass
+                elif line[:2] != "&&" and line[0] !="!":
+                    print("Warning: This line does not belong to any block: \n{}".format(line))
+                # Check if is a new Fortran block
+                elif line[2:9]=="Fortran":
+                    taskcounter+=1
+                    sepLine = line[10:].split(" ")
+                        
+                    # Copy every line in this block to a temp file, untile next line start with &&
+                    with open (Path(tempdir+"temptxt{}.txt".format(taskcounter)),"w+",encoding="utf-8") as f:
+                        while (linecounter+1 < len(lines) and lines[linecounter+1][:2]!="&&"):
+                            linecounter+=1
+                            f.write(lines[linecounter]+"\n")
+
                     
-                # Copy every line in this block to a temp file, untile next line start with &&
-                with open (Path(tempdir+"temptxt{}.txt".format(taskcounter)),"w+",encoding="utf-8") as f:
-                    while (linecounter+1 < len(lines) and lines[linecounter+1][:2]!="&&"):
-                        linecounter+=1
-                        f.write(lines[linecounter]+"\n")
+                    # convert to json
+                    jsonpath = dp.txtToJson(tempdir+"temptxt{}.txt".format(taskcounter))
 
-                
-                # convert to json
-                jsonpath = dp.txtToJson(tempdir+"temptxt{}.txt".format(taskcounter))
-
-                # convert to job
-                with open (jsonpath) as f:
-                    jsonobj = json.load(f)
-                
-                # Problem with testing path
-                try:
-                    dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]),\
-                                                self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
-                except Exception as e:
-                    if testmod:
-                        dvrparser = dp.GeneralParser("DVR3Dinterface/configs/{}.json".format(sepLine[0]),\
-                                                self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
-                    else:
+                    # convert to job
+                    with open (jsonpath) as f:
+                        jsonobj = json.load(f)
+                    
+                    # Problem with testing path
+                    try:
+                        dvrparser = dp.GeneralParser("configs/{}.json".format(sepLine[0]),\
+                                                    self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
+                    except Exception as e:
+                        if testmod:
+                            dvrparser = dp.GeneralParser("DVR3Dinterface/configs/{}.json".format(sepLine[0]),\
+                                                    self.JROT,self.IDIA,self.PROJECT_NAME,self.saveOptional)
+                        else:
+                            raise
+                    
+                    # Generate .job file
+                    try:
+                        dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter),noAsk=True)
+                    except Exception as e:
+                        print("Error at writing job file of task {}".format(taskcounter))
                         raise
-                
-                # Generate .job file
-                try:
-                    dvrparser.write(jsonobj, tempdir+"tempjob{}.job".format(taskcounter),noAsk=True)
-                except Exception as e:
-                    print("Error at writing job file of task {}".format(taskcounter))
-                    raise
 
-                # Update the default filenames
-                [self.PROJECT_NAME,self.JROT,self.IDIA] = dvrparser.getFileNamePRT()
+                    # Update the default filenames
+                    [self.PROJECT_NAME,self.JROT,self.IDIA] = dvrparser.getFileNamePRT()
 
-                # gather commands to rename required files, already generated in dvrparser
-                self.RE_PAIRs_grp.extend(dvrparser.RE_PAIRs) 
-                self.LK_PAIRs_grp.extend(dvrparser.LK_PAIRs)
+                    # gather commands to rename required files, already generated in dvrparser
+                    self.RE_PAIRs_grp.extend(dvrparser.RE_PAIRs) 
+                    self.LK_PAIRs_grp.extend(dvrparser.LK_PAIRs)
 
-                # Optional argument:
-                outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
-                try:
-                    # Check for optional argument
-                    if len(sepLine)>2:
-                        for argstr in sepLine[2:]:
-                            [arg, val] = argstr.split("=")
-                            if arg=="outname": outname = val
-                except Exception as e:
-                    print("Error reading block argument: {}".format(line))
-                    raise
+                    # Optional argument:
+                    outname = "result_{}_J{}D{}.{}".format(self.PROJECT_NAME,self.JROT,self.IDIA,sepLine[0])
+                    try:
+                        # Check for optional argument
+                        if len(sepLine)>2:
+                            for argstr in sepLine[2:]:
+                                [arg, val] = argstr.split("=")
+                                if arg=="outname": outname = val
+                    except Exception as e:
+                        print("Error reading block argument: {}".format(line))
+                        raise
 
-                # add a command to this object's command list
-                self.commands_grp.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
+                    # add a command to this object's command list
+                    self.commands_grp.append("{} <input/temp/tempjob{}.job> {}".format(sepLine[1],taskcounter,outname))
 
-            elif line[2:9]=="Execute":
-                # An Execute in input means execute all everything before last Execute
-                # Here we put group of commands in to that "List of List", then it can be run by groups later
-                self.commands.append(self.commands_grp)
-                self.commands_grp = []
-                self.RE_PAIRs.append(self.RE_PAIRs_grp)
-                self.RE_PAIRs_grp = []
-                self.LK_PAIRs.append(self.LK_PAIRs_grp)
-                self.LK_PAIRs_grp = []
-            # If not &&Fortran, then it is a command to directly run
-            else:
-                self.commands_grp.append(line[2:])
-            
+                elif line[2:9]=="Execute":
+                    # An Execute in input means execute all everything before last Execute
+                    # Here we put group of commands in to that "List of List", then it can be run by groups later
+                    self.commands.append(self.commands_grp)
+                    self.commands_grp = []
+                    self.RE_PAIRs.append(self.RE_PAIRs_grp)
+                    self.RE_PAIRs_grp = []
+                    self.LK_PAIRs.append(self.LK_PAIRs_grp)
+                    self.LK_PAIRs_grp = []
+                # If not &&Fortran, then it is a command to directly run
+                else:
+                    self.commands_grp.append(line[2:])
+            except Exception:
+                print("Failed parsing input line {}: {}".format(linecounter,line))
+                raise
+
             # Next line
             linecounter+=1
     
@@ -186,6 +192,9 @@ class CombinedInputInterface:
             4. Renaming fort.x files
             5. Delete all fort.x files [optional]
         """
+
+        # Check if there is something to run
+        self.__checkCommands()
 
         # This is a checking step, ensure number of groups are same. If coding correct it should be.
         if len(self.RE_PAIRs) != len(self.commands):
@@ -249,3 +258,14 @@ class CombinedInputInterface:
                 except Exception:
                     print("Failed to remove: {}".format(f))
         
+    def __checkCommands(self):
+        # If user didn't add "Execute" by mistake:
+        if len(self.commands)==0 or self.commands==[[]]:
+            if self.commands_grp!=[]:
+                print("Warning: No commands detected, trying to solve assuming &&Execute is missed at the end")
+                self.commands.append(self.commands_grp)
+                self.RE_PAIRs.append(self.RE_PAIRs_grp)
+                self.LK_PAIRs.append(self.LK_PAIRs_grp)
+            else:
+                raise RuntimeError("No commands to run. No commands in cached steps. Check input file")
+            

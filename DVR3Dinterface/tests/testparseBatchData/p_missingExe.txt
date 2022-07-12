@@ -1,0 +1,35 @@
+&&Fortran ROTLEV3 ./rot.out
+TOLER:"1.0d-4"
+ZPFUN:true
+
+
+ZTRAN:true
+ZDCORE:false
+!!!
+
+NVIB:40
+NEVAL:30
+KMIN:2
+IBASS:120
+NEVAL2:20
+TITLE:"HCN rovib J=2 e and f"
+EZERO:3481.50552084
+! Added for test: IDIA
+IDIA:1
+
+! Not testing parsing, but read this file, generate separated job file and commandline instructions
+
+&&cp fort.8 fort.11
+&&cp fort.9 fort.12
+
+&&Fortran DIPOLE3 ./dip.out
+IKET:8
+IBRA:9
+TITLE:"HCN DIPOLE MOMENT J 2-2 f-e parity"
+NPOT:60
+NV1:30
+NV2:20
+EZERO:3481.50552084
+! For testing, the Project Name is added in the second task instead of the first.
+PROJECT_NAME:"TEST"
+JROT:2
