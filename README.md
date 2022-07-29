@@ -33,6 +33,10 @@ Detaile use instruction can be found in [it's folder](/DVR3Dinterface/)'s README
 
 ---
 # Tutorial / Working Example
+1. [Settingup](#1-setting-up)
+2. [Batch Run](#2-run-python-script-batch)
+3. [Understanding the input](#3-understanding-the-input)
+4. [Single Step](#4-parsearun-single-step)
 ## 1. Setting up
 Assuming the envrionment setting has done, this repo and the ExoMol dvr3d repo has been prepared. This example will run first 3 steps of HCN in dvr3d repo.
 
@@ -101,3 +105,34 @@ Each Fortran block start with &&Fortran and valid until next "&&" mark.
  * outname: optional, specify the output's filename.
 
 The rest of it are parameters for running.
+
+### 3.3 Renaming and Linking
+~~~~
+LK_IKET:"HCN_J2D1.KVEC"
+LK_IBRA:"HCN_J2D1.KVEC2"
+~~~~
+The Fortran code will use "fort.x" where x is a number, to store some intermediate data. These files are automaticly renamed to something meanful.
+
+However, if they has ben renamed, Fortran can't find them if it is wanted. In this case, use LK_\<varname\> and interface will link the filename after it to the correct "fort.x".
+
+### 3.4 &&Execute
+Sometimes the executing needs to be divided into chunks. For example, run DVR3D, ROTLEV using data A, run DVR3D, ROTLEV using data B, then run something using result of A and B.
+
+Result will be renamed and not overwritten (if setting correctly, using PROJECT_NAME, JROT or IDIA to let them renamed to different filenames) But the problem is: when the renaming happens?
+
+If renaming is done after every Fortran run, then user need to use link in every other related Fortran run (ROTLEV in this case), and need to clearly know how those intermediate files work (Which file to link).
+
+Thus, the &&Execute was added. All instructions, tasks will be hold until this command. And the renaming is done after this command. In this way, the "fort.x" files will keep its name within a range, the steps would be: 
+DVR-A, ROT-A, Execute, \
+DVR-B, ROT-B, Execute, \
+Run something using previous outcome, reference files by link, Execute
+
+## 4. parseArun (single step)
+If possible, it is suggested to use the Batch interface even for single step because it is better tested, and developed later based on single step run.
+
+Run first step (DVR3DJZ) can be done by:
+~~~~
+python parseArun.py input/temp/temptxt1.txt DVR3DJZ ./dvr.out --clearAll -o singleFile.result
+~~~~
+
+The format of input file of single step interface is same as the Fortran block of Batch input file. As you may already noticed, the input file used is in a "temp" folder, and that file is exactly parseBatchRun generated and used before.
