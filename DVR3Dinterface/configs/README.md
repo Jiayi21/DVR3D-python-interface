@@ -92,7 +92,12 @@ CUS is used for custimised line format. Similar to VAL, but argument in the line
 
 As shown in the piece of config above, it does not have "format", but adding a format after each argument name after ":". Different argument name should separated comma.
 
-### OUTPUT_FILES
+---
+### 5. RMLARY
+It stands for related-maximum-length-array. Specially made for a special situation of XPECT3 that a variable can have n elements and n depends on another variable.
+
+---
+### 6. OUTPUT_FILES
 ~~~~
 "OUTPUT_FILES":{
     "type":"OUTPUT_FILES",

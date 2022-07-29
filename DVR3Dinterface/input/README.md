@@ -1,3 +1,17 @@
+# Contents:
+ * [Input Files](#input-files)
+   * [Single File (step)](#single-file)
+   * [Batch File (multiple step, combined)](#batch-combined-input)
+     * Fortran DVR3D section
+     * Commandline Instruction Section(cp,make...)
+     * &&Execute
+   * [File Renaming](#extra-file-renaming)
+ * [Input Format](#input-format)
+   * namelist
+   * linking files
+   * leading zero
+   * comment line
+
 # Input Files
 ## Single File
 Input file is a text file encoded in UTF-8. Have similar format as a JSON file, with varialbe name as key and value as value. However, typing quotation marks can be inconvenient so the quotation marks on keys (variable name) will be added by parser.
@@ -29,6 +43,12 @@ Things after "&&" of that line will be considered as a command to run
 ~~~~
 &&cp fort.8 fort.11
 &&cp fort.9 fort.12
+~~~~
+
+This can be used for Fortran code compiling on-the-fly with make file. For example:
+
+~~~~
+&&make <something>
 ~~~~
 
 ### 3. "&&Execute"
