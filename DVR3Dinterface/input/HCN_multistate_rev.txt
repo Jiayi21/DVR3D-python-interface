@@ -1,0 +1,132 @@
+&&Fortran DVR3DJZ_HCNGS ./dvr.x
+!------------------------------------
+PROJECT_NAME:"HCN_Multi_Reverse"
+!
+ZROT:true
+ZTRAN:true
+ZPFUN:true
+ZTHETA:false
+ZR2R1:false
+ZEMBED:true
+ZS0:false
+ZS1:false
+ZX:false
+ZMORS2:false
+!
+NCOORD:3
+NPNT2:73
+JROT:1
+NEVAL:200
+NALF:50
+MAX2D:1750
+MAX3D:100
+IDIA:1
+KMIN:1
+NPNT1:45
+MAX3D2:0
+!
+TITLE:"COMMENTS: TEST INPUT WRITING"
+!
+XMASS(1):1.007825
+XMASS(2):12.000000
+XMASS(3):14.003074
+XMASSR(1):1.007825
+XMASSR(2):12.000000
+XMASSR(3):14.003074
+!
+EMAX1:40000.0
+!
+RE1:2.3
+DISS1:0.1
+WE1:0.0105
+RE2:3.2
+DISS2:0.300
+WE2:0.032
+
+&&Fortran ROTLEV3 ./rotlev.x
+!-------------------------------------
+TOLER:"1.0d-4"
+ZPFUN:true
+ZTRAN:true
+ZDCORE:true
+!
+NVIB:400
+NEVAL:400
+KMIN:2
+IBASS:0
+NEVAL2:0
+!
+TITLE:"HCN rovib J=1 "
+EZERO:0.341812375311e+04
+
+! ======================================
+&&Execute
+! ======================================
+
+&&Fortran DVR3DJZ_HCNGS ./dvr3.x
+! --------------------------------------
+ZROT:true
+ZTRAN:true
+ZLIN:true
+ZPFUN:true
+ZTHETA:false
+ZR2R1:false
+ZEMBED:true
+ZS0:false
+ZS1:false
+ZX:false
+ZMORS2:false
+!
+NCOORD:3
+NPNT2:73
+JROT:0
+NEVAL:400
+NALF:50
+MAX2D:1750
+MAX3D:400
+IDIA:1
+KMIN:1
+NPNT1:45
+MAX3D2:0
+!
+TITLE:"COMMENTS: TEST INPUT WRITING"
+!
+XMASS(1):1.007825
+XMASS(2):12.000000
+XMASS(3):14.003074
+XMASSR(1):1.007825
+XMASSR(2):12.000000
+XMASSR(3):14.003074
+!
+EMAX1:105000.0
+!
+RE1:2.3
+DISS1:0.1
+WE1:0.0105
+RE2:3.2
+DISS2:0.300
+WE2:0.032
+
+! ====================================
+&&Execute
+! ====================================
+
+&&Fortran DIPOLE3 ./dip3.x
+IKET:8
+IBRA:26
+LK_IKET:"HCN_Multi_Reverse_J1D1.KVEC"
+LK_IBRA:"HCN_Multi_Reverse_J0D1.WAVE"
+!
+TITLE:"Vladimir's dipoles"
+!
+NPOT:50
+NV1:400
+NV2:100
+IBASE1:1
+IBASE2:1
+!
+EZERO:0.341812375311e+04
+EZEROUP:0.634639318023e+05
+TE:0.6000e+05
+
+&&Execute
