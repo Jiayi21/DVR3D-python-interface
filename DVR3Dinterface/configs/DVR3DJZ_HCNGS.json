@@ -1,0 +1,164 @@
+{
+  "LINE1": {
+    "type": "PRT",
+    "head":"&PRT",
+    "keylist_I":[
+      "ILEV",
+      "IEIGS1",
+      "IVECS1",
+      "IEIGS2",
+      "IVECS2",
+      "IVINT",
+      "IBAND",
+      "INTVEC",
+      "IOUT1",
+      "IOUT2",
+      "IWAVE"
+    ],
+    "keylist_A": [],
+    "keylist_L": [
+      "ZPHAM",
+      "ZPRAD",
+      "ZP1D",
+      "ZP2D",
+      "ZPMIN",
+      "ZPVEC",
+      "ZLMAT",
+      "ZCUT",
+      "ZROT",
+      "ZPERP",
+      "ZEMBED",
+      "ZLIN",
+      "ZMORS1",
+      "ZMORS2",
+      "ZLADD",
+      "ZTWOD",
+      "ZVEC",
+      "ZALL",
+      "ZTHETA",
+      "ZR2R1",
+      "ZTRAN",
+      "ZQUAD2",
+      "ZDIAG",
+      "ZPFUN",
+      "ZPSEG",
+      "ZS0",
+      "ZS1",
+      "ZX"
+    ]
+  },
+  "LINE2": {
+    "type": "VAL",
+    "format": "I5",
+    "minval": 1,
+    "keylist": [
+      "NCOORD"
+    ]
+  },
+  "LINE3": {
+    "type": "VAL",
+    "format": "I5",
+    "minval": 1,
+    "keylist": [
+      "NPNT2",
+      "JROT",
+      "NEVAL",
+      "NALF",
+      "MAX2D",
+      "MAX3D",
+      "IDIA",
+      "KMIN",
+      "NPNT1",
+      "IPAR",
+      "MAX3D2"
+    ]
+  },
+  "LINE4": {
+    "type": "TITLE",
+    "length": 72
+  },
+  "LINE5": {
+    "type": "CUS",
+    "minval": 0,
+    "keylist": {
+      "FIXCOS": "F20.10"
+    }
+  },
+  "LINE6": {
+    "type": "VAL",
+    "format":"F20.10",
+    "minval": 3,
+    "keylist": [
+      "XMASS(1)",
+      "XMASS(2)",
+      "XMASS(3)"
+  ]
+  },
+  "LINE7": {
+    "type": "VAL",
+    "format":"F20.10",
+    "minval": 3,
+    "keylist": [
+      "XMASSR(1)",
+      "XMASSR(2)",
+      "XMASSR(3)"
+    ]
+  },
+  "LINE8": {
+    "type": "VAL",
+    "minval": 0,
+    "format": "F20.10",
+    "keylist": [
+      "EMAX1",
+      "EMAX2"
+    ]
+  },
+  "LINE9": {
+    "type": "VAL",
+    "format":"F20.10",
+    "minval": 3,
+    "keylist": [
+      "RE1",
+      "DISS1",
+      "WE1"
+    ]
+  },
+  "LINE10": {
+    "type": "VAL",
+    "format":"F20.10",
+    "minval": 3,
+    "keylist": [
+      "RE2",
+      "DISS2",
+      "WE2"
+    ]
+  },
+  "LINE11": {
+    "type": "CUS",
+    "minval": 0,
+    "keylist": {
+      "EZERO": "F20.10"
+    }
+  },
+  "OUTPUT_FILES":{
+    "type":"OUTPUT_FILES",
+    "fixed":{
+      "ILEV":14,
+      "IWAVE":26
+    },
+    "optional":{
+      "IEIGS1":7,
+      "IVECS1":3,
+      "IEIGS2":2,
+      "IVECS2":4,
+      "IOUT1":24,
+      "IOUT2":25
+    },
+    "scratch":{
+      "IVINT":17,
+      "IBAND":15,
+      "INTVEC":16
+    },
+    "input":{}
+  }
+}
