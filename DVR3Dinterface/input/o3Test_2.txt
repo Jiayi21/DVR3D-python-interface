@@ -47,12 +47,14 @@ RE2:2.8
 DISS2:0.10
 WE2:0.0024
 
-!---------------------
+!---------------------------
 ! The ROTLEV below is actually ROTLEV3B
-&&
+! Document state fort.4 is a copy of fort.26
+&&cp fort.26 fort.4
+!---------------------------
 
 !---------------------------
-&&Fortran ROTLEV3 ./rotlev.x
+&&Fortran ROTLEV3B ./rotlev.x
 !---------------------------
 ! 1.2 J=2 Run ROTLEV
 !---------------------------
@@ -119,7 +121,13 @@ DISS2:0.10
 WE2:0.0024
 
 !---------------------------
-&&Fortran ROTLEV3 ./rotlev.x
+! The ROTLEV below is actually ROTLEV3B
+! Document state fort.4 is a copy of fort.26
+&&cp fort.26 fort.4
+!---------------------------
+
+!---------------------------
+&&Fortran ROTLEV3B ./rotlev.x
 !---------------------------
 ! 2.2 J=5 Run ROTLEV
 !---------------------------
