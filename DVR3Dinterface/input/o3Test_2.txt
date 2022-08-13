@@ -1,0 +1,153 @@
+!---------------------------
+! [O3Test] Content:
+!   1.1:    J=2 DVR
+!   1.2:    J=2 ROT
+!   2.1:    J=5 DVR
+!   2.2:    J=5 ROT
+!---------------------------
+&&Fortran DVR3DJZ ./dvr3d.x
+!---------------------------
+PROJECT_NAME: "O3Test"
+!---------------------------
+! 1.1 J=2 Run DVR3D
+!---------------------------
+ZROT:true
+ZTRAN:true
+ZLIN:true
+ZPFUN:true
+ZMORS1:true
+ZMORS2:true
+!
+NCOORD:3
+!
+NPNT2:20
+JROT:2
+NEVAL:500
+NALF:70
+MAX2D:9999
+MAX3D:1500
+IDIA:-2
+KMIN:2
+NPNT1:0
+MAX3D2:0
+!
+TITLE:"WATER: RADAU SYMMETRISED COORDINATES-ATOMIC (J=2 DVR)"
+!
+XMASS(1):15.994917
+XMASS(2):15.994917
+XMASS(3):15.994917
+XMASSR(1):15.994917
+XMASSR(2):15.994917
+XMASSR(3):15.994917
+EMAX1:55000.0
+RE1:2.8
+DISS1:0.10
+WE1:0.0024
+RE2:2.8
+DISS2:0.10
+WE2:0.0024
+
+!---------------------------
+! The ROTLEV below is actually ROTLEV3B
+! Document state fort.4 is a copy of fort.26
+&&cp fort.26 fort.4
+!---------------------------
+
+!---------------------------
+&&Fortran ROTLEV3B ./rotlev.x
+!---------------------------
+! 1.2 J=2 Run ROTLEV
+!---------------------------
+TITLE:"WATER: RADAU SYMMETRISED COORDINATES-ATOMIC (J=2 ROT)"
+!---------------------------
+TOLER:"1.0d-4"
+ZPFUN:true
+ZPHAM:false
+ZDCORE:true
+ZTRAN:true
+ZVEC:false
+!
+NVIB:500
+NEVAL:300
+KMIN:2
+IBASS:0
+NEVAL2:0
+!
+EZERO:0.149094805706e+04
+
+!===========================
+&&Execute
+!===========================
+
+!---------------------------
+&&Fortran DVR3DJZ ./dvr3d.x
+!---------------------------
+! 2.1 J=5 Run DVR3D
+!---------------------------
+ZROT:true
+ZTRAN:true
+ZLIN:true
+ZPFUN:true
+ZMORS1:true
+ZMORS2:true
+!
+NCOORD:3
+!
+NPNT2:20
+JROT:5
+NEVAL:500
+NALF:70
+MAX2D:9999
+MAX3D:1500
+IDIA:-2
+KMIN:2
+NPNT1:0
+IPAR:0
+!
+TITLE:"WATER: RADAU SYMMETRISED COORDINATES-ATOMIC (J=5 DVR)"
+!
+XMASS(1):15.994917
+XMASS(2):15.994917
+XMASS(3):15.994917
+XMASSR(1):15.994917
+XMASSR(2):15.994917
+XMASSR(3):15.994917
+EMAX1:55000.0
+RE1:2.8
+DISS1:0.10
+WE1:0.0024
+RE2:2.8
+DISS2:0.10
+WE2:0.0024
+
+!---------------------------
+! The ROTLEV below is actually ROTLEV3B
+! Document state fort.4 is a copy of fort.26
+&&cp fort.26 fort.4
+!---------------------------
+
+!---------------------------
+&&Fortran ROTLEV3B ./rotlev.x
+!---------------------------
+! 2.2 J=5 Run ROTLEV
+!---------------------------
+TITLE:"WATER: RADAU SYMMETRISED COORDINATES-ATOMIC (J=2 ROT)"
+!---------------------------
+TOLER:"1.0d-4"
+ZPFUN:true
+ZPHAM:false
+ZDCORE:true
+ZTRAN:true
+ZVEC:false
+!
+NVIB:500
+NEVAL:400
+KMIN:2
+IBASS:0
+NEVAL2:0
+!
+EZERO:0.149094805706e+04
+
+!===========================
+&&Execute
+!===========================
