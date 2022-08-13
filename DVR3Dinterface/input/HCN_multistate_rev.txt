@@ -1,4 +1,4 @@
-&&Fortran DVR3DJZ_HCNGS ./dvr.x
+&&Fortran DVR3DRJZ_HCNGS ./dvr.x
 !------------------------------------
 PROJECT_NAME:"HCN_Multi_Reverse"
 !
@@ -63,7 +63,7 @@ EZERO:0.341812375311e+04
 &&Execute
 ! ======================================
 
-&&Fortran DVR3DJZ_HCNGS ./dvr3.x
+&&Fortran DVR3DRJZ_HCNGS ./dvr3.x
 ! --------------------------------------
 ZROT:true
 ZTRAN:true

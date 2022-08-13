@@ -9,10 +9,10 @@ import filecmp
 from pytest import raises
 
 tpath = "DVR3Dinterface/tests/testdata/"
-cpath="DVR3Dinterface/configs/DVR3DJZ.json"
+cpath="DVR3Dinterface/configs/DVR3DRJZ.json"
 
 def test_positive():
-    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DJZ.json")
+    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DRJZ.json")
     with open (Path("DVR3Dinterface/tests/testdata/positive.json")) as fin:
         jsonfile = json.load(fin)
     dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/PositiveTest.job"),noAsk=True)
@@ -52,7 +52,7 @@ def test_positive_XPECT_Array():
     assert filecmp.cmp(tpath+"p_XPECT_pos.job", tpath+"p_XPECT.job")
 
 def test_IntToFloat():
-    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DJZ.json")
+    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DRJZ.json")
     with open (Path("DVR3Dinterface/tests/testdata/IntToFloat.json")) as fin:
         jsonfile = json.load(fin)
     dvrparser.write(jsonfile,Path("DVR3Dinterface/tests/testdata/IntToFLoat.job"),noAsk=True)
@@ -60,7 +60,7 @@ def test_IntToFloat():
                         "DVR3Dinterface/tests/testdata/IntToFLoat.job")
 
 def test_WrongChar():
-    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DJZ.json")
+    dvrparser = parser.GeneralParser("DVR3Dinterface/configs/DVR3DRJZ.json")
     with open (Path("DVR3Dinterface/tests/testdata/CharForFloat.json")) as fin:
         jsonfile = json.load(fin)
     with raises(TypeError) as exception:

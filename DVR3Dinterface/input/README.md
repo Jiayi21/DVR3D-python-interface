@@ -25,13 +25,13 @@ In this type of input files, for [example](combined.txt), the file is devided in
 
 ### 1. Fortan DVR3D section:
 ~~~~
-&&Fortran DVR3DJZ ./dvr.out outname=output1_manual.result
+&&Fortran DVR3DRJZ ./dvr.out outname=output1_manual.result
 ....
 (Variables and values, same as single file contents)
 ~~~~
 
 && must followed by "Fortran" without spaces. It can take several arguments:
- * Config: (DVR3DJZ) config of .job file, use json filenames from configs folder without ".json"
+ * Config: (DVR3DRJZ) config of .job file, use json filenames from configs folder without ".json"
  * Fortran Executable: (./dvr.out) Path to fortran code to run
  * \[Optional\]: Output filename, followed by "outputname=" If not given, it will be result_\<PROJECT_NAME\>J<>D<>_\<config_name\>, such as *result_HCN_J2D1.DVR3D*
 

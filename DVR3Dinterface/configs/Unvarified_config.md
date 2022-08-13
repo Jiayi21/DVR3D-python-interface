@@ -5,7 +5,7 @@ Argument Status:
 * Differ: Format on document have some uncertain (by error, wrong result, or that F20.0 looks greatly different from example), but an acceptable format was found (most likely manually counted from example)
 * Unknown: Not verified, and does not in an example. Parsing of this variable was not tested.
 
-# DVR3DJZ
+# DVR3DRJZ
 FIXCOS,EZERO,XMASS,XMASSR,EMAX1,EMAX2,RE1,RE2,DISS1,DISS2,WE1,WE2
 
 Changed from F20.0 to F20.10

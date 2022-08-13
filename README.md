@@ -95,7 +95,7 @@ Which means: the "make ./dvr.out" is directly put into the console while the int
 
 ### 3.2 Fortran Block
 ~~~~
-&&Fortran DVR3DJZ ./dvr.out outname=result_HCN_J2D1.DVR3DJZ
+&&Fortran DVR3DRJZ ./dvr.out outname=result_HCN_J2D1.DVR3DRJZ
 ZROT:true
 ZTRAN:true
 ZLIN:true
@@ -104,7 +104,7 @@ ZR2R1:false
 ...
 ~~~~
 Each Fortran block start with &&Fortran and valid until next "&&" mark.
- * DVR3DJZ: the config name, config specify the input format of Fortran code.
+ * DVR3DRJZ: the config name, config specify the input format of Fortran code.
  * ./dvr.out: Executable name, the compiled Fortran by the make above
  * outname: optional, specify the output's filename.
 
@@ -134,9 +134,9 @@ Run something using previous outcome, reference files by link, Execute
 ## 4. parseArun (single step)
 If possible, it is suggested to use the Batch interface even for single step because it is better tested, and developed later based on single step run.
 
-Run first step (DVR3DJZ) can be done by:
+Run first step (DVR3DRJZ) can be done by:
 ~~~~
-python parseArun.py input/temp/temptxt1.txt DVR3DJZ ./dvr.out --clearAll -o singleFile.result
+python parseArun.py input/temp/temptxt1.txt DVR3DRJZ ./dvr.out --clearAll -o singleFile.result
 ~~~~
 
 The format of input file of single step interface is same as the Fortran block of Batch input file. As you may already noticed, the input file used is in a "temp" folder, and that file is exactly parseBatchRun generated and used before.

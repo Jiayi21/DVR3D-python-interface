@@ -1,4 +1,4 @@
-&&Fortran DVR3DJZ ./dvr.out
+&&Fortran DVR3DRJZ ./dvr.out
 !
 PROJECT_NAME:"WATER"
 !
@@ -51,7 +51,7 @@ NPROPIN:4
 NPRT:29
 IPROP:[1,2,3,4]
 
-&&Fortran DVR3DJZ ./dvr.out outname=result_WATER_even.DVR3DJZ
+&&Fortran DVR3DRJZ ./dvr.out outname=result_WATER_even.DVR3DRJZ
 !
 TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
 !
@@ -89,7 +89,7 @@ WE2:0.007
 
 &&cp fort.26 26_even_t
 
-&&Fortran DVR3DJZ ./dvr.out outname=result_WATER_odd.DVR3DJZ
+&&Fortran DVR3DRJZ ./dvr.out outname=result_WATER_odd.DVR3DRJZ
 !
 TITLE:" WATER: RADAU SYMMETRISED COORDINATES"
 !

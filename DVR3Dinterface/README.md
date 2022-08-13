@@ -62,7 +62,7 @@ usage can be found by running with -h argument.
 
 example:
 ~~~~
-python parseArun.py input/hcn.dvr DVR3DJZ dvr.out
+python parseArun.py input/hcn.dvr DVR3DRJZ dvr.out
 ~~~~
 
 # parseBatchRun.py

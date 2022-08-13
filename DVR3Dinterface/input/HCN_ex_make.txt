@@ -2,7 +2,7 @@
 &&make ./rot.out
 &&make ./dip.out
 
-&&Fortran DVR3DJZ ./dvr.out outname=result_HCN_J2D1.DVR3DJZ
+&&Fortran DVR3DRJZ ./dvr.out outname=result_HCN_J2D1.DVR3DRJZ
 ! Can use "!" to add comment
 ! Avoid having space between "&&" and "Fortran"
 PROJECT_NAME:"HCN"
