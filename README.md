@@ -1,7 +1,3 @@
-# Validation Branch:
-Add input cases for more examples
-Any changes to interface will sync with main branch after tests are done
-
 # DVR3D-python-interface
 This interface is designed to be run on Linux for the DVR3D Fortran library.
 
@@ -15,6 +11,7 @@ Except running auto-test, scripts should be run in "DVR3Dinterface" folder and s
   * [Run](/DVR3Dinterface/)
   * [Input Format](/DVR3Dinterface/input/)
   * [Config Files](/DVR3Dinterface/configs/) (In case the input variable to Fortran code has changed)
+* [Branches](#branches)
 
 
 # Environment
@@ -140,3 +137,8 @@ python parseArun.py input/temp/temptxt1.txt DVR3DRJZ ./dvr.out --clearAll -o sin
 ~~~~
 
 The format of input file of single step interface is same as the Fortran block of Batch input file. As you may already noticed, the input file used is in a "temp" folder, and that file is exactly parseBatchRun generated and used before.
+
+# Branches:
+## Validation Branch:
+Add input cases for more examples
+Any changes to interface will sync with main branch after tests are done
